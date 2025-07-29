@@ -5,6 +5,10 @@ Reported: 0xfc64e6672fe8cd0d8fa56ad512dd24e39da34d51a88010eb63477c4a2624230c
 
 State Differences
 -----------------
+[K]: State key
+[L]: Local (expected) value
+[T]: Target value
+
 [K] 0x00ff00ff00ff00ff2109eb7c5b05bbfb96dbc5f4898f506e8e4fbe3457c497
 [L] 0x0e00000000000000
 [T] 0x0600000000000000
