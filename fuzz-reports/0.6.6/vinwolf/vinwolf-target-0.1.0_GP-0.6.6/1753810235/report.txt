@@ -16,5 +16,5 @@ State Differences
 Reproduction Instruction
 ------------------------
 Seed: 42
-Step: 1
+Step: 16
 Target: vinwolf-target-0.1.0_GP-0.6.6
