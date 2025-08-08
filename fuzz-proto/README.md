@@ -53,54 +53,7 @@ The fuzzer communicates with target implementations using a synchronous
 
 #### Protocol Messages
 
-```asn1
--- Block and Header as defined by the gray paper
-
-TrieKey ::= OCTET STRING (SIZE(31))
-
-Hash ::= OCTET STRING (SIZE(32))
-HeaderHash ::= Hash
-StateRootHash ::= Hash
-
-Version ::= SEQUENCE {
-    major INTEGER (0..255),
-    minor INTEGER (0..255),
-    patch INTEGER (0..255)
-}
-
-PeerInfo ::= SEQUENCE {
-    name         UTF8String,
-    app-version  Version,
-    jam-version  Version
-}
-
-KeyValue ::= SEQUENCE {
-    key     TrieKey,
-    value   OCTET STRING
-}
-
-State ::= SEQUENCE OF KeyValue
-
-ImportBlock ::= Block
-
-SetState ::= SEQUENCE {
-    header  Header,
-    state   State
-}
-
-GetState ::= HeaderHash
-
-StateRoot ::= StateRootHash
-
-Message ::= CHOICE {
-    peer-info    [0] PeerInfo,
-    import-block [1] ImportBlock,
-    set-state    [2] SetState,
-    get-state    [3] GetState,
-    state        [4] State,
-    state-root   [5] StateRoot
-}
-```
+Schema file: [fuzz.asn](./fuzz.asn)
 
 **Note**: The `Header` included in the `SetState` message may be eventually
 used - via its hash - to reference the associated state. It is conceptually
