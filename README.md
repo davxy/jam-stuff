@@ -7,6 +7,11 @@ materials, including:
 - PVM execution traces
 - Protocol conformance discussions and issues
 
+Here’s a reformulation with warning emojis for emphasis:
+
+### ⚠️ While this may assist implementations in achieving protocol compliance,
+**THIS IS NOT THE OFFICIAL AUDITING PROCESS**
+
 ## Repository Structure
 
 - `fuzz-proto` - Fuzzer protocol specification
