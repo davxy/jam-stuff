@@ -1,0 +1,89 @@
+
+fuzz-targets/javajam/0.6.7 via ☕ v24.0.2
+❯ ./bin/javajam fuzz /tmp/jam_conformance.sock
+❤ JavaJAM
+
+17:37:46.557 INFO  FuzzServer -- Fuzzer server listening on /tmp/jam_conformance.sock
+17:37:46.559 INFO  FuzzServer -- ChainSpec: TINY
+17:37:50.767 INFO  FuzzServer -- Fuzzer connected
+17:37:50.771 INFO  FuzzServer -- Received PeerInfo: PeerInfo{name='fuzzer', appVersion=Version{major=0, minor=1, patch=24}, jamVersion=Version{major=0, minor=6, patch=7}}
+17:37:50.775 INFO  FuzzServer -- Sent PeerInfo: PeerInfo{name='JavaJAM', appVersion=Version{major=0, minor=6, patch=7}, jamVersion=Version{major=0, minor=6, patch=7}}
+17:37:50.788 INFO  FuzzServer -- Received block: 0xb5af...1222
+17:37:50.821 INFO  FuzzServer -- Received state with root 0x4d24fc82c8b9365386494c429d9b4f0f623e41b33c9f0d1eec4bd85507948f1d
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::loadLibrary has been called by io.javajam.util.crypto.jni.BLS12381JNI in an unnamed module (file:/mnt/ssd/develop/jam/fuzz-targets/javajam/0.6.7/javajam-linux-x86_64.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+17:37:50.868 INFO  Node -- ❤ JavaJAM (version 0.6.7.10)
+17:37:50.874 INFO  Node -- 📋 Parameters: Tiny
+17:37:50.874 INFO  Node -- ⚙ Genesis (Header Hash: 0xb5af...1222)
+17:37:50.874 INFO  Node -- 🏷 Peer ID: 0x4418...9ace
+17:37:50.874 INFO  Node -- 🏷 Bandersnatch Key: 0xff71...85b3
+17:37:50.874 INFO  Node -- 🏷 BLS Key: 0xb69b...faa8
+17:37:50.874 INFO  InMemoryDatabase -- 📊 In-Memory database initialized (Not for production use!)
+17:37:50.911 INFO  FuzzServer -- Sent state root: 0x4d24fc82c8b9365386494c429d9b4f0f623e41b33c9f0d1eec4bd85507948f1d
+17:37:51.439 INFO  FuzzServer -- Received block: 0xd5a2...ac43
+17:37:51.489 INFO  BlockImportWorker -- 🌟 Imported block #1 (Header Hash: 0xd5a2...ac43 Parent: 0xb5af...1222)
+17:37:51.493 INFO  FuzzServer -- Posterior state root: 0x8aa14c75b243e8f1abda671dde3aafac7d612db526dc71dfd6ab95e03e513de8
+17:37:51.496 INFO  FuzzServer -- Sent state root: 0x8aa14c75b243e8f1abda671dde3aafac7d612db526dc71dfd6ab95e03e513de8
+17:37:51.517 INFO  FuzzServer -- Received block: 0x5fd1...9c87
+17:37:51.553 INFO  StandardProgram -- readOnlyMemoryLength: 13080
+17:37:51.553 INFO  StandardProgram -- readWriteMemoryLength: 10096
+17:37:51.553 INFO  StandardProgram -- heapPages: 0
+17:37:51.553 INFO  StandardProgram -- stackSize: 8192
+17:37:51.553 INFO  StandardProgram -- codeLength: 92765
+17:37:51.650 INFO  HostCalls -- DEBUG|boot Bootstrap Service Accumulate, 0h @2 $18446744073709551615
+17:37:51.718 INFO  HostCalls -- DEBUG|boot Decoded instruction: CreateService { code_hash: 0x3f61595f1c2e7cf4..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 60479, memo: 0x39b1c5acdd7a7cfe..., registration: None }
+17:37:51.725 INFO  HostCalls -- DEBUG|boot Created service dec4bcb3h
+17:37:51.731 INFO  HostCalls -- DEBUG|boot Attemting transfer, gas=9981867
+17:37:51.739 INFO  HostCalls -- DEBUG|boot Transfer of 60479 with 10000 gas resulted in Ok(())
+17:37:51.741 INFO  PVMInterpreter -- PVM result: Result{code=0, name='halt'}
+17:37:51.748 INFO  BlockImportWorker -- 🌟 Imported block #2 (Header Hash: 0x5fd1...9c87 Parent: 0xd5a2...ac43)
+17:37:51.754 INFO  FuzzServer -- Posterior state root: 0x551e3f593931aa95e6f32a79c84b478f118bf1d1830e46c396a21bcb45e71ec0
+17:37:51.759 INFO  FuzzServer -- Sent state root: 0x551e3f593931aa95e6f32a79c84b478f118bf1d1830e46c396a21bcb45e71ec0
+17:37:51.778 INFO  FuzzServer -- Received block: 0x592e...db9b
+17:37:51.818 INFO  StandardProgram -- readOnlyMemoryLength: 13080
+17:37:51.818 INFO  StandardProgram -- readWriteMemoryLength: 10096
+17:37:51.818 INFO  StandardProgram -- heapPages: 0
+17:37:51.818 INFO  StandardProgram -- stackSize: 8192
+17:37:51.819 INFO  StandardProgram -- codeLength: 92765
+17:37:51.858 INFO  HostCalls -- DEBUG|boot Bootstrap Service Accumulate, 0h @3 $18446744073709412632
+17:37:51.922 INFO  HostCalls -- DEBUG|boot Decoded instruction: CreateService { code_hash: 0x3f61595f1c2e7cf4..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 48285, memo: 0xf62f697363ac3eb1..., registration: None }
+17:37:51.926 INFO  HostCalls -- DEBUG|boot Created service 4f1b6331h
+17:37:51.931 INFO  HostCalls -- DEBUG|boot Attemting transfer, gas=9981874
+17:37:51.938 INFO  HostCalls -- DEBUG|boot Transfer of 48285 with 10000 gas resulted in Ok(())
+17:37:51.940 INFO  PVMInterpreter -- PVM result: Result{code=0, name='halt'}
+17:37:51.944 INFO  BlockImportWorker -- 🌟 Imported block #3 (Header Hash: 0x592e...db9b Parent: 0x5fd1...9c87)
+17:37:51.950 INFO  FuzzServer -- Posterior state root: 0x861516136236270d9844b992cc2d0070c1aa0628c9a02bd0b9c2d20d9086cfd8
+17:37:51.953 INFO  FuzzServer -- Sent state root: 0x861516136236270d9844b992cc2d0070c1aa0628c9a02bd0b9c2d20d9086cfd8
+17:37:51.970 INFO  FuzzServer -- Received block: 0xc933...6f26
+17:37:52.010 ERROR BlockImportWorker -- Failed importing block
+io.javajam.core.exception.PreimagesException: preimages_not_sorted_unique
+        at io.javajam.core.validation.PreimagesValidation.validatePreimages(PreimagesValidation.java:28)
+        at io.javajam.core.state.StateTransitionFunction.validateBlockAndExtrinsic(StateTransitionFunction.java:90)
+        at io.javajam.core.state.StateTransitionFunction.updateState(StateTransitionFunction.java:101)
+        at io.javajam.core.workers.BlockImportWorker.importBlock(BlockImportWorker.java:283)
+        at io.javajam.fuzz.FuzzDataHandler.handleImportBlock(FuzzDataHandler.java:80)
+        at io.javajam.fuzz.FuzzServer.handleConnection(FuzzServer.java:87)
+        at io.javajam.fuzz.FuzzServer.lambda$initialize$0(FuzzServer.java:43)
+        at java.base/java.lang.Thread.run(Unknown Source)
+17:37:52.011 INFO  FuzzServer -- Import failed: preimages_not_sorted_unique
+io.javajam.core.exception.PreimagesException: preimages_not_sorted_unique
+        at io.javajam.core.validation.PreimagesValidation.validatePreimages(PreimagesValidation.java:28)
+        at io.javajam.core.state.StateTransitionFunction.validateBlockAndExtrinsic(StateTransitionFunction.java:90)
+        at io.javajam.core.state.StateTransitionFunction.updateState(StateTransitionFunction.java:101)
+        at io.javajam.core.workers.BlockImportWorker.importBlock(BlockImportWorker.java:283)
+        at io.javajam.fuzz.FuzzDataHandler.handleImportBlock(FuzzDataHandler.java:80)
+        at io.javajam.fuzz.FuzzServer.handleConnection(FuzzServer.java:87)
+        at io.javajam.fuzz.FuzzServer.lambda$initialize$0(FuzzServer.java:43)
+        at java.base/java.lang.Thread.run(Unknown Source)
+17:37:52.012 INFO  FuzzServer -- Import failed.
+17:37:52.014 INFO  FuzzServer -- Sent state root: 0x861516136236270d9844b992cc2d0070c1aa0628c9a02bd0b9c2d20d9086cfd8
+17:37:52.015 INFO  FuzzServer -- Received get state for header hash: 0xc933fc98bee5d8cfcd7010aff54909f46e34a8e8dbb74779fc59f93c6fe16f26
+17:37:52.015 ERROR FuzzServer -- Failed to handle connection
+java.lang.NullPointerException: Cannot invoke "io.javajam.core.state.State.encodeToKV()" because "state" is null
+        at io.javajam.fuzz.FuzzDataHandler.handleGetState(FuzzDataHandler.java:148)
+        at io.javajam.fuzz.FuzzServer.handleConnection(FuzzServer.java:91)
+        at io.javajam.fuzz.FuzzServer.lambda$initialize$0(FuzzServer.java:43)
+        at java.base/java.lang.Thread.run(Unknown Source)
