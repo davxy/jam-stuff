@@ -1,0 +1,18 @@
+❯ ./jamixir fuzzer --socket-path /tmp/jam.sock --log debug
+19:21:17.522 [info] [NODE] 🔧 Starting fuzzer mode
+19:21:17.525 [info] [NODE] Setting log level to debug
+19:21:17.525 [info] [NODE] Setting log level to debug
+19:21:17.525 [info] [NODE] 🟣 Pump up the JAM, pump it up...
+19:21:17.533 [debug] [NODE] System loaded with config: [core_count: 2, forget_delay: 32, epoch_length: 12, max_tickets_pre_extrinsic: 16, tickets_per_validator: 3, slot_period: 6, rotation_period: 4, validator_count: 6, ticket_submission_end: 10, gas_accumulation: 1000000]
+19:21:17.533 [info] [NODE] 🎭 Starting as fuzzer
+19:21:17.537 [info] 💍 Initializing ring context with size 6
+19:21:18.212 [info] [NODE] Node running. Type 'q' + Enter for graceful shutdown
+19:21:18.216 [info] Ready to be fuzzed on /tmp/jam.sock
+19:21:22.263 [debug] New fuzzer connected
+19:21:22.264 [info] Peer info: name=fuzzer, version=0.1.24, protocol=0.6.7
+19:21:22.265 [info] Sending peer info: Jamixir, 0.2.2, 0.6.7
+19:21:22.589 [debug] [NODE][STORAGE] Storing state for header 0xb5af8edad70d962097eefa2cef92c8284cf0a7578b70a6b7554cf53ae6d51222
+19:21:22.776 [info] State successfully stored for header hash: 0xb5af8edad70d962097eefa2cef92c8284cf0a7578b70a6b7554cf53ae6d51222
+19:21:22.805 [info] Importing block: 0x8a2c121136c29f2bf588a9f29aad83ba0fb3f64f5e8475e933617bb8591875b7
+19:21:22.990 [info] Block import failed: work_report_gas_too_high
+19:21:29.400 [info] Client disconnected
