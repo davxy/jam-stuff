@@ -130,17 +130,26 @@ Encoded:
 
 #### Message Flow
 
-The protocol follows a strict request-response pattern where:
-- The fuzzer always initiates requests
-- The target must respond to each request before the next request is sent
-- Responses are mandatory and must match the expected message type for each request
-- State roots are compared after each block import to detect discrepancies
-- Full state retrieval via `GetState` is only performed when state root
-  mismatches are detected
-- Unexpected or malformed messages result in blunt session termination
-- The fuzzer may implement timeouts for target responses
-- The fuzzing session is terminated by the fuzzer closing the connection.
-  No explicit termination message is sent.
+The protocol adheres to a strict request–response model with the following rules:
+
+- **Request initiation:** Only the fuzzer sends requests; the target never
+  initiates communication.
+- **Sequential exchange:** The target must reply to each request before the next
+  one is sent.
+- **Response requirements:** Every response must match the expected message type
+  for the corresponding request.
+- **Import failures:** If a block import fails, the target must return the state
+  root of the last successfully imported block. This response always indicates an
+  import failure.
+- **State verification:** After each block import, state roots are compared to
+  detect inconsistencies.
+- **Full state retrieval:** The `GetState` request is issued only when a state
+  root mismatch is detected.
+- **Error handling:** Receiving an unexpected or malformed message results in
+  immediate session termination.
+- **Timeouts:** The fuzzer may impose time limits on the target’s responses.
+- **Session termination:** The fuzzing session ends when the fuzzer closes the
+  connection; no explicit termination message is exchanged.
 
 **Typical Session Flow:**
 
