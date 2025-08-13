@@ -23,6 +23,7 @@ class RawState(Struct):
         ('keyvals', n(KeyValues))
     ]
 
+
 class Genesis(Struct):
     type_mapping = [
         ('header', n(Header)),
@@ -125,6 +126,12 @@ class Message(Enum):
         5: ("StateRoot", n(OpaqueHash))
     }   
 
+class WireMessage(Struct):
+    type_mapping = [
+        ('length', n(U32)),
+        ('message', n(Message))
+    ]
+
 def convert_to_json(filename, subsystem_type, spec_name = None):
     with open(filename, 'rb') as file:
         blob = file.read()
@@ -138,14 +145,24 @@ def main():
     spec.set_spec("tiny")
 
     type_mapping = {
+        'Genesis': Genesis,
+        'TraceStep': TraceStep,
         'Message': Message,
+        'WireMessage': WireMessage,
         'Report': Report,
     }
     
-    parser = argparse.ArgumentParser(description='Decode binary files to JSON')
+    parser = argparse.ArgumentParser(description='Decode binary files to JSON', 
+                                   formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('filename', help='Binary file to decode')
-    parser.add_argument('type', choices=type_mapping.keys(), 
-                       help='Type to use for decoding')
+    type_help = "Type to use for decoding:\n"
+    type_help += " * Report: fuzzer report (generally `report.bin`)\n"
+    type_help += " * Genesis: trace genesis (generally `genesis.bin`)\n"
+    type_help += " * TraceStep: trace step (generally `nnnnnnnn.bin`)\n"
+    type_help += " * Message: fuzzer protocol message (with no length prefix)\n"
+    type_help += " * WireMessage: fuzzer protocol message (with length prefix)\n"
+    
+    parser.add_argument('type', choices=type_mapping.keys(), help=type_help)
     
     args = parser.parse_args()
     
