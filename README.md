@@ -9,6 +9,12 @@ materials, including:
 
 While this may assist implementations in achieving protocol compliance,**THIS IS NOT THE OFFICIAL AUDITING PROCESS**
 
+## Latest Updates
+
+For the latest updates and announcements, see [NEWS.md](NEWS.md) which contains
+information about new tools, discoveries, and improvements to the conformance
+testing infrastructure.
+
 ## Repository Structure
 
 - `fuzz-proto` - Fuzzer protocol specification
