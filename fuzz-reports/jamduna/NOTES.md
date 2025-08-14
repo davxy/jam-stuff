@@ -1,8 +1,8 @@
-* GP version: v0.6.7
+GP version: v0.6.7
 
 ## Reports
 
-### Challenged
+### Disputed
 
 1755150174
 1755150526
