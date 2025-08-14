@@ -167,20 +167,20 @@ The protocol adheres to a strict request–response model with the following rul
              |   |      SetState           |   |
              |   | ----------------------> |   | Initialize state
              |   |      StateRoot          |   |
-  Check root |   | <---------------------- |   | Return state root
+  Check root |   | <---------------------- |   | Return head state root
              +---+-------------------------+---+
                  |                         |
              +---+--- BLOCK PROCESSING ----+---+
              |   |      ImportBlock        |   |
              |   | ----------------------> |   | Process block #1
              |   |      StateRoot          |   |
-  Check root |   | <---------------------- |   | Return new state root
+  Check root |   | <---------------------- |   | Return head state root
              |   |          ...            |   |
              |   |                         |   |
              |   |      ImportBlock        |   |
              |   | ----------------------> |   | Process block #n
              |   |      StateRoot          |   |
-             |   | <---------------------- |   | Return new state root
+             |   | <---------------------- |   | Return head state root
              |   |          ...            |   |
              +---+-------------------------+---+
                  |                         |
