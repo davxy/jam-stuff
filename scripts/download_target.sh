@@ -30,6 +30,19 @@ TARGET_FILES[spacejam]="spacejam-0.6.7-linux-amd64.tar.gz"
 # Get list of available targets
 AVAILABLE_TARGETS=($(printf '%s\n' "${!TARGET_REPOS[@]}" | sort))
 
+clone_github_repo() {
+    target=$1 
+    repo=$2
+    echo "WARN: cloning $target repo"
+    local temp_dir=$(mktemp -d)
+    git clone "https://github.com/$repo" --depth 1 "$temp_dir"
+    local commit_hash=$(cd "$temp_dir" && git rev-parse --short HEAD)
+    local target_dir="targets/$target/$commit_hash"
+    mkdir -p "targets/$target"
+    mv "$temp_dir" "$target_dir"
+    echo "Cloned to $target_dir"
+    return 0
+}
 
 # Shared function to download GitHub releases
 # Usage: download_github_release target
@@ -42,9 +55,9 @@ download_github_release() {
         echo "Error: missing repository information for $target"
         return 1
     fi
+
     if [ -z $file ]; then
-        echo "WARN: cloning $target repo"
-        git clone "https://github.com/$repo" --depth 1 "targets/$target"
+        clone_github_repo $target $repo
         return 0
     fi
     
@@ -76,7 +89,7 @@ download_github_release() {
     echo "Successfully downloaded $file"
     echo "File size: $(ls -lh $file | awk '{print $5}')"
     
-    local download_dir="targets/$(basename $repo)-${latest_tag}"   
+    local download_dir="targets/$target/${latest_tag}"   
     
     mkdir -p "$download_dir"
     echo "Moving to $download_dir..."
