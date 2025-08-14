@@ -1,0 +1,125 @@
+❯ ./jamixir fuzzer --socket-path /tmp/jam.sock --log debug
+
+08:07:28.473 [info] 🔧 Starting fuzzer mode
+
+08:07:28.476 [info] Setting log level to debug
+
+08:07:28.477 [info] Setting log level to debug
+2025-08-14 08:07:28.477 [info] 🟣 Pump up the JAM, pump it up... module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:28.485 [debug] System loaded with config: [core_count: 2, forget_delay: 32, epoch_length: 12, max_tickets_pre_extrinsic: 16, tickets_per_validator: 3, slot_period: 6, rotation_period: 4, validator_count: 6, ticket_submission_end: 10, gas_accumulation: 10000000] module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:28.485 [info] 🎭 Starting as fuzzer module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:28.490 [info] 💍 Initializing ring context with size 6 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:29.161 [info] Node running. Type 'q' + Enter for graceful shutdown module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:29.165 [info] Ready to be fuzzed on /tmp/jam.sock module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:49.257 [debug] New fuzzer connected module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:49.258 [info] Peer info: name=fuzzer, version=0.1.24, protocol=0.6.7 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:49.259 [info] Sending peer info: Jamixir, 0.2.3, 0.6.7 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:49.590 [debug] [STORAGE] Storing state for header 0xb5af8edad70d962097eefa2cef92c8284cf0a7578b70a6b7554cf53ae6d51222 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:49.777 [info] State successfully stored for header hash: 0xb5af8edad70d962097eefa2cef92c8284cf0a7578b70a6b7554cf53ae6d51222 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:49.790 [info] Importing block: 0xc876bb933deab31671a6a41676a16f7f15e4b1f7dfc373ba5bbf32e8576ecc04 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:50.033 [debug] [STORAGE] Storing state for header 0xc876bb933deab31671a6a41676a16f7f15e4b1f7dfc373ba5bbf32e8576ecc04 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:50.207 [info] Importing block: 0xb8df15fba5f7db74d7373cdf40b7d3ea0e4995920fb3512e1d21f703d18596f0 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:50.393 [debug] [STORAGE] Storing state for header 0xb8df15fba5f7db74d7373cdf40b7d3ea0e4995920fb3512e1d21f703d18596f0 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:50.567 [info] Importing block: 0xb8000c629edb3cec545c552aeee635bf4f91e68f65f3170dbb237ea75b029e22 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:50.748 [debug] [STORAGE] Storing state for header 0xb8000c629edb3cec545c552aeee635bf4f91e68f65f3170dbb237ea75b029e22 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:50.920 [info] Importing block: 0x764f98780846b96f94497354a1731572b4ac80f5474861c0a700b9df0b158332 module=Util.Logger line=17 node=NODE
+2025-08-14 08:07:51.174 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.236 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.243 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.244 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.247 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.252 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.294 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.298 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.299 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.302 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.307 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.345 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.403 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.407 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.407 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.410 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.415 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.457 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.461 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.462 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.464 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.470 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.506 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.562 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.566 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.567 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.570 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.575 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.617 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.621 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.622 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.624 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.629 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.673 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.730 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.734 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.735 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.738 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.743 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.788 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.792 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.793 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.796 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.801 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.840 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.897 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.901 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.902 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.905 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.910 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.951 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.955 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.956 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.959 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:51.964 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.003 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.060 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.064 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.065 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.068 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.073 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.115 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.119 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.119 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.122 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.127 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.167 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.225 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.229 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.230 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.232 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.237 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.279 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.283 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.284 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.287 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.292 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.330 [debug] [PVM] #0 [boot] Bootstrap Service Accumulate, 0h @4 $18446744073709551615 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.388 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 31365, memo: 0x32dc214aac290d90..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.392 [debug] [PVM] #0 [boot] Created service 21a5f196h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.393 [debug] [PVM] Write to storage key 0x63726561746564 => 0x96f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.398 [debug] [PVM] #0 [boot] Attemting transfer, gas=19980098 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.404 [debug] [PVM] #0 [boot] Transfer of 31365 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.446 [debug] [PVM] #0 [boot] Decoded instruction: CreateService { code_hash: 0x11790679b74be6b7..., code_len: 78303, min_item_gas: 10000, min_memo_gas: 10000, endowment: 67115, memo: 0x759ef10b603e0428..., registration: None } module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.450 [debug] [PVM] #0 [boot] Created service 21a5f1c0h module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.451 [debug] [PVM] Write to storage key 0x63726561746564 => 0xc0f1a521 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.454 [debug] [PVM] #0 [boot] Attemting transfer, gas=19954746 module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.459 [debug] [PVM] #0 [boot] Transfer of 67115 with 10000 gas resulted in Ok(()) module=Util.Logger line=22 node=NODE
+2025-08-14 08:07:52.462 [error] Task #PID<0.195.0> started from #PID<0.193.0> terminating
+** (MatchError) no match of right hand side value: %System.State.ServiceAccount{storage: %{}, preimage_storage_p: %{}, preimage_storage_l:%{{<<17, 121, 6, 121, 183, 75, 230, 183, 206, 91, 67, 204, 53, 105, 225, 210, 236, 202, 127, 171, 228, 178, 141, 176, 89, 92, 118, 239, 8,76, 34, 108>>, 78303} => []}, code_hash: <<17, 121, 6, 121, 183, 75, 230, 183, 206, 91, 67, 204, 53, 105, 225, 210, 236, 202, 127, 171, 228, 178, 141, 176, 89, 92, 118, 239, 8, 76, 34, 108>>, deposit_offset: 0, balance: 109869, gas_limit_g: 10000, gas_limit_m: 10000, creation_slot: 4, last_accumulation_slot: 0, parent_service: 0}
+    (jamixir 0.6.7) lib/system/state/accumulation.ex:207: anonymous fn/3 in System.State.Accumulation.deferred_transfers_stats/2
+    (elixir 1.17.2) lib/enum.ex:2531: Enum."-reduce/3-lists^foldl/2-0-"/3
+    (jamixir 0.6.7) lib/system/state/accumulation.ex:174: System.State.Accumulation.do_transition/3
+    (jamixir 0.6.7) lib/system/state.ex:147: System.State.add_block/2
+    (jamixir 0.6.7) lib/node.ex:35: Jamixir.Node.add_block/2
+    (jamixir 0.6.7) lib/fuzzer/service.ex:136: Jamixir.Fuzzer.Service.handle_message/3
+    (jamixir 0.6.7) lib/fuzzer/service.ex:38: Jamixir.Fuzzer.Service.handle_client/2
+    (elixir 1.17.2) lib/task/supervised.ex:101: Task.Supervised.invoke_mfa/2
+Function: #Function<0.38134026/0 in Jamixir.Fuzzer.Service.loop_acceptor/2>
+    Args: []
