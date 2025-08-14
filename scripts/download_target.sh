@@ -1,0 +1,128 @@
+#!/bin/bash
+
+set -e
+
+# Target configuration: maps target names to their GitHub repositories and release files
+# NOTE: Some targets may require repository cloning if they don't provide release files.
+# If repo cloning is required, the TARGET_FILES value is left empty 
+declare -A TARGET_REPOS
+declare -A TARGET_FILES
+# === VINWOLF ===
+TARGET_REPOS[vinwolf]="bloppan/conformance_testing"
+# === JAMZIG ===
+TARGET_REPOS[jamzig]="jamzig/conformance-releases"
+# === JAMDUNA ===
+TARGET_REPOS[jamduna]="jam-duna/jamduna-target-releases"
+TARGET_FILES[jamduna]="duna_target_linux"
+# === JAMIXIR ===
+TARGET_REPOS[jamixir]="jamixir/jamixir-releases"
+TARGET_FILES[jamixir]="jamixir_linux-x86-64-gp_0.6.7_v0.2.3_tiny.tar.gz"
+# === JAVAJAM ===
+TARGET_REPOS[javajam]="javajamio/javajam-releases"
+TARGET_FILES[javajam]="javajam-linux-x86_64.zip"
+# === JAMZILLA ===
+TARGET_REPOS[jamzilla]="ascrivener/jamzilla-conformance-releases"
+TARGET_FILES[jamzilla]="fuzzserver-tiny-amd64-linux"
+# === SPACEJAM ===
+TARGET_REPOS[spacejam]="spacejamapp/specjam"
+TARGET_FILES[spacejam]="spacejam-0.6.7-linux-amd64.tar.gz"
+
+# Get list of available targets
+AVAILABLE_TARGETS=($(printf '%s\n' "${!TARGET_REPOS[@]}" | sort))
+
+
+# Shared function to download GitHub releases
+# Usage: download_github_release target
+download_github_release() {
+    local target=$1
+    local repo="${TARGET_REPOS[$target]}"
+    local file="${TARGET_FILES[$target]}"
+    
+    if [ -z "$repo" ]; then
+        echo "Error: missing repository information for $target"
+        return 1
+    fi
+    if [ -z $file ]; then
+        echo "WARN: cloning $target repo"
+        git clone "https://github.com/$repo" --depth 1 "targets/$target"
+        return 0
+    fi
+    
+    echo "Fetching latest release information..."
+    
+    # Get the latest release tag from GitHub API
+    local latest_tag=$(curl -s "https://api.github.com/repos/$repo/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    
+    if [ -z "$latest_tag" ]; then
+        echo "Error: Could not fetch latest release tag"
+        return 1
+    fi
+    
+    echo "Latest version: $latest_tag"
+    
+    # Construct download URL
+    local download_url="https://github.com/$repo/releases/download/$latest_tag/$file"
+    
+    echo "Downloading from: $download_url"
+    
+    # Download the file
+    curl -L -o "$file" "$download_url"
+    
+    if [ $? -ne 0 ]; then
+        echo "Error: Download failed"
+        return 1
+    fi
+    
+    echo "Successfully downloaded $file"
+    echo "File size: $(ls -lh $file | awk '{print $5}')"
+    
+    local download_dir="targets/$(basename $repo)-${latest_tag}"   
+    
+    mkdir -p "$download_dir"
+    echo "Moving to $download_dir..."
+    mv "$file" "$download_dir/"
+
+    # Check if file is an archive and extract it, or make it executable
+    cd "$download_dir"
+    if [[ "$file" == *.zip ]]; then
+        echo "Extracting zip archive: $file"
+        unzip "$file"
+        rm "$file"
+    elif [[ "$file" == *.tar.gz ]] || [[ "$file" == *.tgz ]]; then
+        echo "Extracting tar.gz archive: $file"
+        tar -xzf "$file"
+        rm "$file"
+    elif [[ "$file" == *.tar ]]; then
+        echo "Extracting tar archive: $file"
+        tar -xf "$file"
+        rm "$file"
+    else
+        echo "Making file executable: $file"
+        chmod +x "$file"
+    fi
+    cd - > /dev/null
+}
+
+
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <target>"
+    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
+    exit 1
+fi
+
+TARGET="$1"
+
+if [ "$TARGET" = "all" ]; then
+    echo "Downloading all targets: ${AVAILABLE_TARGETS[*]}"
+    for target in "${AVAILABLE_TARGETS[@]}"; do
+        echo "Downloading $target..."
+        download_github_release "$target"
+        echo ""
+    done
+elif [[ -v TARGET_REPOS[$TARGET] ]]; then
+    download_github_release "$TARGET"
+else
+    echo "Unknown target '$TARGET'"
+    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
+    exit 1
+fi
