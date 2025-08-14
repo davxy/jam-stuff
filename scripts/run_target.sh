@@ -75,7 +75,7 @@ run_javajam() {
 }
 
 run_spacejam() {
-    run "spacejam" "./spacejam fuzz target $DEFAULT_SOCK"
+    run "spacejam" "./spacejam -vv fuzz target $DEFAULT_SOCK"
 }
 
 run_vinwolf() {
