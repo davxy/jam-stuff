@@ -4,7 +4,6 @@ GP Version: 0.6.7
 
 ### Disputed
 
-- 1755155383
 
 ### Archived
 
