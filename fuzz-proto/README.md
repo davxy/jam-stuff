@@ -140,7 +140,7 @@ The protocol adheres to a strict request–response model with the following rul
   for the corresponding request.
 - **Import failures:** If a block import fails, the target must return the state
   root of the last successfully imported block. This response always indicates an
-  import failure.
+  import failure. Then wait for the next block from the target as usual.
 - **State verification:** After each block import, state roots are compared to
   detect inconsistencies.
 - **Full state retrieval:** The `GetState` request is issued only when a state
