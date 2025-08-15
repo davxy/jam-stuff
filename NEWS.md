@@ -1,3 +1,13 @@
+[15-08-25]
+
+From now on, I will not continuously notify you in the issue when new reports
+are available. It is the team's responsibility to check their folder for any
+new reports. Please leave a comment in the issue when a report is sorted,
+including the reason for the failure. This reason will be added to the archived
+report to help other teams and to speed up troubleshooting of potential
+regressions. I will double-check the fix before moving the report to the
+archive.
+
 [14-08-25]
 
 Archive of inter-team reports: [./fuzz-reports/archive]  
