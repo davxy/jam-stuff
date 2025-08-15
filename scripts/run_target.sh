@@ -6,6 +6,7 @@ DEFAULT_SOCK="/tmp/jam_target.sock"
 
 # List of available targets
 AVAILABLE_TARGETS=(
+    "boka"
     "jamzig"
     "jamduna"
     "jamixir"
@@ -13,7 +14,6 @@ AVAILABLE_TARGETS=(
     "javajam"
     "spacejam"
     "vinwolf"
-    "boka"
 )
 
 cleanup() {
@@ -69,7 +69,7 @@ run_docker() {
 
     trap cleanup_docker EXIT INT TERM
 
-    docker run --rm --pull=never --platform linux/amd64 --name "$target" -v /tmp:/tmp "$image" $command &
+    docker run --rm --pull=never --platform linux/amd64 --name "$target" -v /tmp:/tmp --user "$(id -u):$(id -g)" "$image" $command &
 
     TARGET_PID=$!
     sleep 3
