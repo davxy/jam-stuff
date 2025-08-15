@@ -14,11 +14,11 @@ TARGET_REPOS[vinwolf]="bloppan/conformance_testing"
 # === JAMZIG ===
 TARGET_REPOS[jamzig]="jamzig/conformance-releases"
 # === JAMDUNA ===
-TARGET_REPOS[jamduna]="jam-duna/jamduna-target-releases"
+TARGET_REPOS[jamduna]="jam-duna/jamtestnet"
 TARGET_FILES[jamduna]="duna_target_linux"
 # === JAMIXIR ===
 TARGET_REPOS[jamixir]="jamixir/jamixir-releases"
-TARGET_FILES[jamixir]="jamixir_linux-x86-64-gp_0.6.7_v0.2.3_tiny.tar.gz"
+TARGET_FILES[jamixir]="jamixir_linux-x86-64-gp_0.6.7_v0.2.4_tiny.tar.gz"
 # === JAVAJAM ===
 TARGET_REPOS[javajam]="javajamio/javajam-releases"
 TARGET_FILES[javajam]="javajam-linux-x86_64.zip"
