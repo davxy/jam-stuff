@@ -13,6 +13,7 @@ AVAILABLE_TARGETS=(
     "javajam"
     "spacejam"
     "vinwolf"
+    "boka"
 )
 
 cleanup() {
@@ -21,7 +22,6 @@ cleanup() {
         return
     fi
     CLEANUP_DONE=true
-    
     echo "Cleaning up..."
     if [ ! -z "$TARGET_PID" ]; then
         echo "Killing target $TARGET_PID"
@@ -43,6 +43,35 @@ run() {
     eval "$command" &
     TARGET_PID=$!
     popd > /dev/null
+    sleep 3
+    echo "Waiting for target termination (pid=$TARGET_PID)"
+    wait $TARGET_PID
+}
+
+run_docker() {
+    local target="$1"
+    local image="$2"
+    local command="$3"
+
+    echo "Run $target via Docker"
+
+    if ! docker image inspect "$image" >/dev/null 2>&1; then
+        echo "Error: Docker image '$image' not found locally."
+        echo "Please run: ./scripts/get_target.sh $target"
+        exit 1
+    fi
+
+    cleanup_docker() {
+        echo "Cleaning up Docker container $target..."
+        docker kill "$target" 2>/dev/null || true
+        rm -f "$DEFAULT_SOCK"
+    }
+
+    trap cleanup_docker EXIT INT TERM
+
+    docker run --rm --pull=never --platform linux/amd64 --name "$target" -v /tmp:/tmp "$image" $command &
+
+    TARGET_PID=$!
     sleep 3
     echo "Waiting for target termination (pid=$TARGET_PID)"
     wait $TARGET_PID
@@ -82,14 +111,19 @@ run_vinwolf() {
     run "vinwolf" "./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
 }
 
+run_boka() {
+    run_docker "boka" "acala/boka:latest" "fuzz target --socket-path $DEFAULT_SOCK"
+}
+
 case "$1" in
     "jamzig") run_jamzig ;;
-    "jamduna") run_jamduna ;;        
-    "jamixir") run_jamixir ;;        
-    "jamzilla") run_jamzilla ;;        
-    "javajam") run_javajam ;;        
+    "jamduna") run_jamduna ;;
+    "jamixir") run_jamixir ;;
+    "jamzilla") run_jamzilla ;;
+    "javajam") run_javajam ;;
     "spacejam") run_spacejam ;;
     "vinwolf") run_vinwolf ;;
+    "boka") run_boka ;;
     *)
         echo "Unknown target '$1'"
         echo "Available targets: ${AVAILABLE_TARGETS[*]}"
