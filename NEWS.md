@@ -1,5 +1,8 @@
 [15-08-25]
 
+Highly disputed report: 1755248982 - All teams affected.
+Possible reason: https://github.com/davxy/jam-conformance/issues/16#issuecomment-3190838048
+
 Removed problematic reports from `archive`: 1754582958 1754725568 1754754058 1755184602
 
 From now on, I will not continuously ping teams in their issue when new reports
