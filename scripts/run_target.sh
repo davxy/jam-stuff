@@ -112,7 +112,9 @@ run_vinwolf() {
 }
 
 run_boka() {
-    run_docker "boka" "acala/boka:latest" "fuzz target --socket-path $DEFAULT_SOCK"
+    while true; do
+        run_docker "boka" "acala/boka:latest" "fuzz target --socket-path $DEFAULT_SOCK"
+    done
 }
 
 case "$1" in
