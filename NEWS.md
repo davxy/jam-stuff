@@ -1,3 +1,14 @@
+[17-08-25]
+
+Added comprehensive Disputes table to fuzz-reports/README.md showing test results
+across all the fuzzed JAM implementations.
+The table provides a clear overview of which reports cause failures or crashes for each team,
+making it easier to track implementation conformance and identify problematic test cases.
+
+Enhanced README.md with "Notes on Reports, Requests, and Contributions" section
+to help set clear expectations for collaboration and support. This guidance aims
+to make interactions more effective for everyone while keeping the project sustainable.
+
 [15-08-25]
 
 Highly disputed report: 1755248982 - All teams affected.
