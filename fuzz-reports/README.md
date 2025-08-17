@@ -24,5 +24,8 @@
 | 1755251719 |      |         |   ❌    |        |    ❌    |          |         |
 | 1755252727 |      |         |         |        |          |   ❌     |         |
 
-❌ := Fails with report
-💀 := Crash or doesn't reply to get-state
+* ❌ := Fails with report
+* 💀 := Crash or fuzzer protocol failure
+
+Empty cells indicate successful processing without disputes.
+Only disputed reports are shown in the table
