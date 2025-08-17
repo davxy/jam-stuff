@@ -58,8 +58,8 @@ Clear, motivated ideas with proper context, though, are always welcome;
 especially when tied to fuzzing. At that point, just open a PR or an issue.
 
 This is not about laziness. Hand-holding and 24H support is simply not my job,
-and time is finite -- PolkaJAM needs love too. A bit of filtering is what keeps
-things sustainable for everyone.
+and time is finite. A bit of filtering is what keeps things sustainable for
+everyone.
 
 That said, **conversations that end up clarifying ambiguities or revealing bugs
 in the PolkaJAM implementation are welcome and encouraged** :-)
