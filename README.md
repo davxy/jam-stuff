@@ -62,5 +62,5 @@ and time is finite. A bit of filtering is what keeps things sustainable for
 everyone.
 
 That said, **conversations that end up clarifying ambiguities or revealing bugs
-in the PolkaJAM implementation are welcome and encouraged** :-)
+in the fuzzer implementation are welcome and encouraged** :-)
 
