@@ -15,11 +15,11 @@ For the latest updates and announcements, see [NEWS.md](NEWS.md) which contains
 information about new tools, discoveries, and improvements to the conformance
 testing infrastructure.
 
-## Repository Structure
+## Repository Content
 
-- `fuzz-proto` - Fuzzer protocol specification
-- `fuzz-reports` - Fuzzing test results
-- `pvm-traces` - PVM execution traces and logs scratchpad
+- [fuzz-proto](./fuzz-proto) - Fuzzer protocol specification
+- [fuzz-reports](./fuzz-reports) - Fuzzing test reports
+- [pvm-traces](./pvm-traces) - PVM execution traces scratchpad
 
 ## Related Resources
 
