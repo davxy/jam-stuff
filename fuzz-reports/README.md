@@ -29,3 +29,9 @@
 
 Empty cells indicate successful processing without disputes.
 Only disputed reports are shown in the table
+
+### Dispute Reports
+
+- Dispute reports are stored **per team** in the `./<jam-version>/disputes` subfolder.  
+- Each dispute has its own folder, named after the **traces involved**.  
+- **Disputed traces** are preserved permanently, even after the dispute has been resolved for all teams.  
