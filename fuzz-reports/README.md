@@ -1,4 +1,4 @@
-## Disputes (0.6.7)
+## Disputed Reports (0.6.7)
 
 |            | boka | jamduna | jamixir | jamzig | jamzilla | javajam | spacejam | vinwolf |
 |------------|------|---------|---------|--------|----------|---------|----------|---------|
@@ -30,8 +30,9 @@
 Empty cells indicate successful processing without disputes.
 Only disputed reports are shown in the table
 
-### Dispute Reports
+### Reports Organization
 
-- Dispute reports are stored **per team** in the `./<jam-version>/disputes` subfolder.  
-- Each dispute has its own folder, named after the **traces involved**.  
+- Reports are stored **per team** in the `./<jam-version>/reports` subfolder.  
+- Traces are stored in the `./<jam-version>/traces` subfolder.  
+- Each report is named after the **trace involved**.
 - **Disputed traces** are preserved permanently, even after the dispute has been resolved for all teams.  
