@@ -1,0 +1,44 @@
+{
+    "target": {
+        "name": "jamzilla",
+        "app_version": {
+            "major": 0,
+            "minor": 1,
+            "patch": 0
+        },
+        "jam_version": {
+            "major": 0,
+            "minor": 6,
+            "patch": 7
+        }
+    },
+    "config": {
+        "seed": "42",
+        "profile": {
+            "ServiceLife": null
+        },
+        "safrole": false,
+        "max_work_items": 1,
+        "max_service_keys": 10,
+        "mutation_ratio": 0.0,
+        "max_mutations": 3,
+        "max_steps": 100
+    },
+    "fuzz_state": {
+        "step": 8,
+        "slot": 8
+    },
+    "roots": {
+        "exp": "0xec3e80b60ea1e171cd04b3192bc061248c070f7c4720fbce63689f7d7fe0460b",
+        "got": "0xd95a6476d401f044d9db237e9a020ed48d051f1ff2a9deaf8da970a03003ead9"
+    },
+    "keyvals": [
+        {
+            "key": "0x628b2afee748be0d75a39350dba161af70e6468719f1ae681fcb0c24988aa0",
+            "diff": {
+                "exp": "0x4d67980000000000",
+                "got": "0x5167980000000000"
+            }
+        }
+    ]
+}
