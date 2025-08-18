@@ -1,0 +1,44 @@
+{
+    "target": {
+        "name": "jam-duna-target-0.6.7.16",
+        "app_version": {
+            "major": 0,
+            "minor": 6,
+            "patch": 7
+        },
+        "jam_version": {
+            "major": 0,
+            "minor": 6,
+            "patch": 7
+        }
+    },
+    "config": {
+        "seed": "42",
+        "profile": {
+            "Empty": null
+        },
+        "safrole": false,
+        "max_work_items": 1,
+        "max_service_keys": 10,
+        "mutation_ratio": 0.0,
+        "max_mutations": 3,
+        "max_steps": 100
+    },
+    "fuzz_state": {
+        "step": 1,
+        "slot": 8
+    },
+    "roots": {
+        "exp": "0xec3e80b60ea1e171cd04b3192bc061248c070f7c4720fbce63689f7d7fe0460b",
+        "got": "0x36b3adadce2a2ae2455c93e588637cd9c75a344ed143830ee77e07e3df934844"
+    },
+    "keyvals": [
+        {
+            "key": "0x628b2afee748be0d75a39350dba161af70e6468719f1ae681fcb0c24988aa0",
+            "diff": {
+                "exp": "0x4d67980000000000",
+                "got": "0x4367980000000000"
+            }
+        }
+    ]
+}
