@@ -1,3 +1,10 @@
+[18-08-25]
+
+Updated the disputed reports table in `fuzz-reports/README.md` with additional  
+**highly controversial** trace reports. Please review them **carefully and critically**.  
+As often emphasized, GP is the single source of truth, avoid blindly matching against
+the fuzzer's expected results.
+
 [17-08-25]
 
 Added comprehensive Disputes table to fuzz-reports/README.md showing test results

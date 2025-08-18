@@ -1,0 +1,65 @@
+{
+    "target": {
+        "name": "Jamixir",
+        "app_version": {
+            "major": 0,
+            "minor": 2,
+            "patch": 4
+        },
+        "jam_version": {
+            "major": 0,
+            "minor": 6,
+            "patch": 7
+        }
+    },
+    "config": {
+        "seed": "42",
+        "profile": {
+            "Empty": null
+        },
+        "safrole": false,
+        "max_work_items": 1,
+        "max_service_keys": 10,
+        "mutation_ratio": 0.0,
+        "max_mutations": 3,
+        "max_steps": 100
+    },
+    "fuzz_state": {
+        "step": 0,
+        "slot": 0
+    },
+    "roots": {
+        "exp": "0x57c0d6b3b7695ea1803795f77235d2d1c12708013c488503b77436186c8a51c6",
+        "got": "0x197896998a6e5b0bbdc0870e9ec289dda6db56e452b30be47c401dfda26e4f3c"
+    },
+    "keyvals": [
+        {
+            "key": "0x004400b500a400aaa0d7f8eab5ca1cca4a0472988422febc68a6b6a944cabf",
+            "diff": {
+                "exp": "0x925bae94",
+                "got": "0x"
+            }
+        },
+        {
+            "key": "0x92815bc6aeee944592324d5d32e29be2f72e602b45627a94f61e9ea35964a1",
+            "diff": {
+                "exp": "0x00",
+                "got": "0x"
+            }
+        },
+        {
+            "key": "0xff000000000000000000000000000000000000000000000000000000000000",
+            "diff": {
+                "exp": "0xd5af3c9f17be352e5ccc5a16ede5fa96f272d95e6b9e2638a4cd483699e402d09ba4f7ffffffffff0a000000000000000a000000000000009276020000000000ffffffffffffffff05000000000000000600000000000000",
+                "got": "0xd5af3c9f17be352e5ccc5a16ede5fa96f272d95e6b9e2638a4cd483699e402d09ba4f7ffffffffff0a000000000000000a000000000000006576020000000000ffffffffffffffff04000000000000000600000000000000"
+            }
+        },
+        {
+            "key": "0xff92005b00ae00940000000000000000000000000000000000000000000000",
+            "diff": {
+                "exp": "0x0bd76004bcf253994276aaf1b473a1ff66ab6e46e0f1e1b4ee3a5bc5dcf7e84bd343020000000000102700000000000010270000000000006932010000000000000000000000000002000000060000000000000000000000",
+                "got": "0x0bd76004bcf253994276aaf1b473a1ff66ab6e46e0f1e1b4ee3a5bc5dcf7e84bd343020000000000102700000000000010270000000000000000000000000000000000000000000000000000060000000000000000000000"
+            }
+        }
+    ]
+}

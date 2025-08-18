@@ -1,0 +1,72 @@
+{
+    "target": {
+        "name": "vinwolf-target",
+        "app_version": {
+            "major": 0,
+            "minor": 1,
+            "patch": 0
+        },
+        "jam_version": {
+            "major": 0,
+            "minor": 6,
+            "patch": 7
+        }
+    },
+    "config": {
+        "seed": "42",
+        "profile": {
+            "Empty": null
+        },
+        "safrole": false,
+        "max_work_items": 1,
+        "max_service_keys": 10,
+        "mutation_ratio": 0.0,
+        "max_mutations": 3,
+        "max_steps": 100
+    },
+    "fuzz_state": {
+        "step": 1,
+        "slot": 8
+    },
+    "roots": {
+        "exp": "0xec3e80b60ea1e171cd04b3192bc061248c070f7c4720fbce63689f7d7fe0460b",
+        "got": "0xbac22f812473d6500815294b8c4571e481cacc33136d5eaefc3c26bfb4372e83"
+    },
+    "keyvals": [
+        {
+            "key": "0x004a003300dd0097aa2917f4f8c0b2a90bd94af2a489a4c616b877dd00479e",
+            "diff": {
+                "exp": "0x",
+                "got": "0x00"
+            }
+        },
+        {
+            "key": "0x244ae93348dd8e97aa2917f4f8c0b2a90bd94af2a489a4c616b877dd00479e",
+            "diff": {
+                "exp": "0x00",
+                "got": "0x"
+            }
+        },
+        {
+            "key": "0x628b2afee748be0d75a39350dba161af70e6468719f1ae681fcb0c24988aa0",
+            "diff": {
+                "exp": "0x4d67980000000000",
+                "got": "0x5167980000000000"
+            }
+        },
+        {
+            "key": "0xff000000000000000000000000000000000000000000000000000000000000",
+            "diff": {
+                "exp": "0xd5af3c9f17be352e5ccc5a16ede5fa96f272d95e6b9e2638a4cd483699e402d0815bf5ffffffffff0a000000000000000a000000000000009276020000000000ffffffffffffffff05000000000000000800000000000000",
+                "got": "0xd5af3c9f17be352e5ccc5a16ede5fa96f272d95e6b9e2638a4cd483699e402d0955bf5ffffffffff0a000000000000000a000000000000009276020000000000ffffffffffffffff05000000000000000800000000000000"
+            }
+        },
+        {
+            "key": "0xff2400e90048008e0000000000000000000000000000000000000000000000",
+            "diff": {
+                "exp": "0xc1789261986d4c4cce1a16a109b033c4d3d1c435fa95c5c73410d492aa9926dc1a49020000000000102700000000000010270000000000006932010000000000000000000000000002000000080000000000000000000000",
+                "got": "0xc1789261986d4c4cce1a16a109b033c4d3d1c435fa95c5c73410d492aa9926dc0649020000000000102700000000000010270000000000006932010000000000000000000000000000000000080000000000000000000000"
+            }
+        }
+    ]
+}
