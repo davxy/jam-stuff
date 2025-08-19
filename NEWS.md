@@ -1,5 +1,9 @@
 [19-08-25]
 
+New traces have been submitted for evaluation under the `traces/TESTING` folder.
+The reports table has been updated with the results for these traces, and the
+reports are stored in each team’s folder as usual.
+
 Retired traces: 1755530535, 1755530728 1755530896 1755531000 1755531081
 1755531179 1755531229 1755531322 1755531375 1755531419 1755531480
 
