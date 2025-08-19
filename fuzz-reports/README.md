@@ -30,9 +30,9 @@
 | 1755531265 |  ❌  |   ❌    |   ❌    |        |          |         |   ❌     |         |
 
 |            | boka | jamduna | jamixir | jamzig | jamzilla | javajam | spacejam | vinwolf |
-| 1755530535 |  ❌  |
-| 1755530728 |  ❌  |
-| 1755530896 |  ❌  |
+| 1755530535 |  ❌  |         |
+| 1755530728 |  ❌  |         |
+| 1755530896 |  ❌  |   ❌    |
 
 
 * ❌ := Fails with report
