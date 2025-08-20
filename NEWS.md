@@ -1,5 +1,7 @@
 [20-08-25]
 
+README updated with [collaboration](https://github.com/davxy/jam-conformance?tab=readme-ov-file#collaboration) section.
+
 New GitHub Discussions page now available: `https://github.com/davxy/jam-conformance/discussions`
 Use this space for inter-team technical conversations about JAM conformance testing.
 This complements the existing issue tracker for bug reports and team specific progress.
