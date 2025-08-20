@@ -21,6 +21,21 @@ testing infrastructure.
 - [fuzz-reports](./fuzz-reports) - Fuzzing test reports
 - [pvm-traces](./pvm-traces) - PVM execution traces scratchpad
 
+## Collaboration
+
+### Communication Channels
+
+- **Matrix Room**: [#jam-conformance:matrix.org](https://matrix.to/#/#jam-conformance:matrix.org) - Real-time chat for quick questions, announcements, and coordination
+- **GitHub Discussions**: [https://github.com/davxy/jam-conformance/discussions](https://github.com/davxy/jam-conformance/discussions) - Structured inter-team conversations about test vectors, fuzzer reports and conformance related things.
+- **GitHub Issues**: For specific bug reports and team-specific technical issues
+
+### Best Practices
+
+- Use the Matrix room for immediate questions and to announce new discussions
+- Start GitHub Discussions for broader technical conversations that benefit from structured threading
+- File GitHub Issues for specific bugs, discrepancies, or actionable items
+- Cross-reference between channels when discussions span multiple platforms
+
 ## Related Resources
 
 - [Official JAM Test Vectors](https://github.com/w3f/jamtestvectors) - Officially released test vectors

@@ -1,3 +1,15 @@
+[20-08-25]
+
+New GitHub Discussions page now available: `https://github.com/davxy/jam-conformance/discussions`
+Use this space for inter-team technical conversations about JAM conformance testing.
+This complements the existing issue tracker for bug reports and team specific progress.
+
+New Matrix public room available for JAM conformance discussions: `#jam-conformance:matrix.org`
+Join the public room for real-time collaboration, questions, and updates related to
+JAM implementation conformance testing. This complements the existing GitHub issues
+and provides a more immediate communication channel for the community.
+Can be used to announce new interesting discussions happening on GH.
+
 [19-08-25]
 
 New traces have been submitted for evaluation under the `traces/TESTING` folder.
