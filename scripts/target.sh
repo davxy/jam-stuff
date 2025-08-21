@@ -33,7 +33,7 @@ TARGETS[javajam.cmd]="./bin/javajam fuzz $DEFAULT_SOCK"
 # === JAMZILLA ===
 TARGETS[jamzilla.repo]="ascrivener/jamzilla-conformance-releases"
 TARGETS[jamzilla.file]="fuzzserver-tiny-amd64-linux"
-TARGETS[jamzill.cmd]="./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
+TARGETS[jamzilla.cmd]="./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
 
 # === SPACEJAM ===
 TARGETS[spacejam.repo]="spacejamapp/specjam"
@@ -194,8 +194,11 @@ run() {
 
         echo "Cleaning up $target..."
         if [ ! -z "$TARGET_PID" ]; then
-            echo "Killing target $TARGET_PID"
-            kill $TARGET_PID 2>/dev/null || true
+            echo "Killing target $TARGET_PID..."
+            kill -TERM $TARGET_PID 2>/dev/null || true
+            sleep 1
+            # Force kill if still running
+            kill -KILL $TARGET_PID 2>/dev/null || true
         fi
         rm -f "$DEFAULT_SOCK"
     }
@@ -203,11 +206,10 @@ run() {
     trap cleanup EXIT INT TERM
 
     pushd "$target_dir" > /dev/null
-    eval "$command" &
+    bash -c "$command" &
     TARGET_PID=$!
     popd > /dev/null
 
-    sleep 3
     echo "Waiting for target termination (pid=$TARGET_PID)"
     wait $TARGET_PID
 }
@@ -282,7 +284,8 @@ case "$ACTION" in
         elif [ -n "${TARGETS[$TARGET.cmd]}" ]; then
             run $TARGET
         else
-            echo "Don't know how to run target '$TARGET'"
+            echo "Unknown target '$TARGET'"
+            echo "Available targets: ${AVAILABLE_TARGETS[*]}"
             exit 1
         fi
         ;;
