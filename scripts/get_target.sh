@@ -38,9 +38,14 @@ pull_docker_image() {
         return 1
     fi
 
-    docker pull "$docker_image"
+    # Check if Docker daemon is running
+    if ! docker info &> /dev/null; then
+        echo "Error: Docker daemon is not running or not accessible"
+        echo "Please start Docker and try again"
+        return 1
+    fi
 
-    if [ $? -ne 0 ]; then
+    if ! docker pull "$docker_image"; then
         echo "Error: Failed to pull Docker image $docker_image"
         return 1
     fi
@@ -142,21 +147,39 @@ echo "Target: $TARGET, Architecture: $ARCH"
 
 if [ "$TARGET" = "all" ]; then
     echo "Downloading all targets: ${AVAILABLE_TARGETS[*]}"
+    failed_targets=()
     for target in "${AVAILABLE_TARGETS[@]}"; do
         echo "Downloading $target for $ARCH..."
         if is_repo_target "$target"; then
             if target_supports_arch "$target" "$ARCH"; then
-                download_github_release "$target" "$ARCH"
+                if ! download_github_release "$target" "$ARCH"; then
+                    echo "Failed to download $target"
+                    failed_targets+=("$target")
+                fi
             else
                 echo "Skipping $target: No $ARCH support available"
             fi
         elif is_docker_target "$target"; then
-            pull_docker_image "$target"
+            echo "Note: Docker images are architecture-independent"
+            if ! pull_docker_image "$target"; then
+                echo "Failed to pull Docker image for $target"
+                failed_targets+=("$target")
+            fi
         else
             echo "Error: Unknown target type for $target"
+            failed_targets+=("$target")
         fi
         echo ""
     done
+    
+    # Report summary
+    if [ ${#failed_targets[@]} -eq 0 ]; then
+        echo "All targets downloaded successfully!"
+    else
+        echo "Failed to download the following targets: ${failed_targets[*]}"
+        echo "Successfully downloaded: $((${#AVAILABLE_TARGETS[@]} - ${#failed_targets[@]})) out of ${#AVAILABLE_TARGETS[@]} targets"
+        exit 1
+    fi
 elif is_repo_target "$TARGET"; then
     if target_supports_arch "$TARGET" "$ARCH"; then
         download_github_release "$TARGET" "$ARCH"
