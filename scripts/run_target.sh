@@ -115,6 +115,11 @@ run_boka() {
     run_docker "boka" "acala/boka:latest" "fuzz target --socket-path $DEFAULT_SOCK"
 }
 
+run_turbojam() {
+    run_docker "turbojam" "r2rationality/turbojam-fuzz:20250821-000"
+}
+
+
 case "$1" in
     "jamzig") run_jamzig ;;
     "jamduna") run_jamduna ;;
@@ -124,6 +129,7 @@ case "$1" in
     "spacejam") run_spacejam ;;
     "vinwolf") run_vinwolf ;;
     "boka") run_boka ;;
+    "turbojam") run_turbojam ;;
     *)
         echo "Unknown target '$1'"
         echo "Available targets: ${AVAILABLE_TARGETS[*]}"

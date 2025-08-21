@@ -30,6 +30,8 @@ TARGET_REPOS[spacejam]="spacejamapp/specjam"
 TARGET_FILES[spacejam]="spacejam-0.6.7-linux-amd64.tar.gz"
 # === BOKA ===
 TARGET_IMAGES[boka]="acala/boka:latest"
+# === TURBOJAM ===
+TARGET_IMAGES[turbojam]="r2rationality/turbojam-fuzz:20250821-000"
 
 # Get list of available targets
 AVAILABLE_TARGETS=($(printf '%s\n' "${!TARGET_REPOS[@]}" "${!TARGET_IMAGES[@]}" | sort))
