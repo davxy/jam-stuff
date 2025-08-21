@@ -14,21 +14,8 @@ AVAILABLE_TARGETS=(
     "javajam"
     "spacejam"
     "vinwolf"
+    "turbojam"
 )
-
-cleanup() {
-    # Prevent multiple cleanup calls
-    if [ "$CLEANUP_DONE" = "true" ]; then
-        return
-    fi
-    CLEANUP_DONE=true
-    echo "Cleaning up..."
-    if [ ! -z "$TARGET_PID" ]; then
-        echo "Killing target $TARGET_PID"
-        kill $TARGET_PID 2>/dev/null || true
-    fi
-    rm -f "$DEFAULT_SOCK"
-}
 
 run() {
     local target="$1"
@@ -37,12 +24,30 @@ run() {
     # Find the subdirectory with the most recent modification date
     target_dir=$(find "$target_dir" -maxdepth 1 -type d | tail -n +2 | xargs ls -dt | head -1)
     echo "Run $target on $target_dir"
+
     # Set up trap to cleanup on exit
+    cleanup() {
+        # Prevent multiple cleanup calls
+        if [ "$CLEANUP_DONE" = "true" ]; then
+            return
+        fi
+        CLEANUP_DONE=true
+
+        echo "Cleaning up $target..."
+        if [ ! -z "$TARGET_PID" ]; then
+            echo "Killing target $TARGET_PID"
+            kill $TARGET_PID 2>/dev/null || true
+        fi
+        rm -f "$DEFAULT_SOCK"
+    }
+
     trap cleanup EXIT INT TERM
+
     pushd "$target_dir" > /dev/null
     eval "$command" &
     TARGET_PID=$!
     popd > /dev/null
+
     sleep 3
     echo "Waiting for target termination (pid=$TARGET_PID)"
     wait $TARGET_PID
@@ -70,8 +75,8 @@ run_docker() {
     trap cleanup_docker EXIT INT TERM
 
     docker run --rm --pull=never --platform linux/amd64 --name "$target" -v /tmp:/tmp --user "$(id -u):$(id -g)" "$image" $command &
-
     TARGET_PID=$!
+
     sleep 3
     echo "Waiting for target termination (pid=$TARGET_PID)"
     wait $TARGET_PID
@@ -118,7 +123,6 @@ run_boka() {
 run_turbojam() {
     run_docker "turbojam" "r2rationality/turbojam-fuzz:20250821-000"
 }
-
 
 case "$1" in
     "jamzig") run_jamzig ;;
