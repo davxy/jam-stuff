@@ -2,20 +2,10 @@
 
 set -e
 
-DEFAULT_SOCK="/tmp/jam_target.sock"
+# Source common functions
+source "$(dirname "$0")/common.sh"
 
-# List of available targets
-AVAILABLE_TARGETS=(
-    "boka"
-    "jamzig"
-    "jamduna"
-    "jamixir"
-    "jamzilla"
-    "javajam"
-    "spacejam"
-    "vinwolf"
-    "turbojam"
-)
+DEFAULT_SOCK="/tmp/jam_target.sock"
 
 run() {
     local target="$1"
@@ -83,22 +73,16 @@ run_docker() {
 }
 
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <target> [architecture]"
-    echo "Available targets: ${AVAILABLE_TARGETS[*]}"
-    echo "Available architectures: linux, macos"
-    echo "Default architecture: linux"
+    show_usage "$0"
     exit 1
 fi
 
 TARGET="$1"
 ARCH="${2:-linux}"  # Default to linux if no architecture specified
 
-# Validate architecture
-if [[ "$ARCH" != "linux" && "$ARCH" != "macos" ]]; then
-    echo "Error: Unsupported architecture '$ARCH'"
-    echo "Supported architectures: linux, macos"
-    exit 1
-fi
+# Validate architecture and target
+validate_architecture "$ARCH" || exit 1
+validate_target "$TARGET" || exit 1
 
 echo "Running target: $TARGET, Architecture: $ARCH"
 

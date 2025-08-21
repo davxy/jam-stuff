@@ -2,100 +2,8 @@
 
 set -e
 
-# Target configuration: maps target names to their GitHub repositories and release files
-# NOTE: Some targets may require repository cloning if they don't provide release files.
-# If repo cloning is required, the TARGET_FILES value is left empty
-# Architecture-specific files: use format "arch:filename" for multiple architectures
-declare -A TARGET_REPOS
-declare -A TARGET_FILES
-# NOTE: For Docker-based targets, use TARGET_IMAGES only
-declare -A TARGET_IMAGES
-
-# === VINWOLF ===
-TARGET_REPOS[vinwolf]="bloppan/conformance_testing"
-
-# === JAMZIG ===
-TARGET_REPOS[jamzig]="jamzig/conformance-releases"
-
-# === JAMDUNA ===
-TARGET_REPOS[jamduna]="jam-duna/jamtestnet"
-TARGET_FILES[jamduna]="linux:duna_target_linux macos:duna_target_mac"
-
-# === JAMIXIR ===
-TARGET_REPOS[jamixir]="jamixir/jamixir-releases"
-TARGET_FILES[jamixir]="linux:jamixir_linux-x86-64-gp_0.6.7_v0.2.6_tiny.tar.gz"
-
-# === JAVAJAM ===
-TARGET_REPOS[javajam]="javajamio/javajam-releases"
-TARGET_FILES[javajam]="linux:javajam-linux-x86_64.zip macos:javajam-macos-x86_64.zip"
-
-# === JAMZILLA ===
-TARGET_REPOS[jamzilla]="ascrivener/jamzilla-conformance-releases"
-TARGET_FILES[jamzilla]="linux:fuzzserver-tiny-amd64-linux macos:fuzzserver-tiny-arm64-darwin"
-
-# === SPACEJAM ===
-TARGET_REPOS[spacejam]="spacejamapp/specjam"
-TARGET_FILES[spacejam]="linux:spacejam-0.6.7-linux-amd64.tar.gz macos:spacejam-0.6.7-macos-arm64.tar.gz"
-
-# === BOKA ===
-TARGET_IMAGES[boka]="acala/boka:latest"
-
-# === TURBOJAM ===
-TARGET_IMAGES[turbojam]="r2rationality/turbojam-fuzz:20250821-000"
-
-# Get list of available targets
-AVAILABLE_TARGETS=($(printf '%s\n' "${!TARGET_REPOS[@]}" "${!TARGET_IMAGES[@]}" | sort))
-
-# Function to get the correct file for a target and architecture
-get_target_file() {
-    local target=$1
-    local arch=$2
-    local files="${TARGET_FILES[$target]}"
-    
-    if [ -z "$files" ]; then
-        echo ""
-        return 0
-    fi
-    
-    # Parse architecture-specific files
-    for file_spec in $files; do
-        if [[ "$file_spec" == "$arch:"* ]]; then
-            echo "${file_spec#*:}"
-            return 0
-        fi
-    done
-    
-    # If requested arch not found, return empty (let caller handle the error)
-    echo ""
-    return 1
-}
-
-# Function to check if a target supports a specific architecture
-target_supports_arch() {
-    local target=$1
-    local arch=$2
-    local files="${TARGET_FILES[$target]}"
-    
-    # If no files specified, assume it supports all architectures (repo cloning)
-    if [ -z "$files" ]; then
-        return 0
-    fi
-    
-    # Check if the architecture is available
-    for file_spec in $files; do
-        if [[ "$file_spec" == "$arch:"* ]]; then
-            return 0
-        fi
-    done
-    
-    echo "Error: No $arch version available for $target" >&2
-    echo "Available architectures for $target:" >&2
-    for file_spec in $files; do
-        echo "  - ${file_spec%%:*}: ${file_spec#*:}" >&2
-    done
-    
-    return 1
-}
+# Source common functions
+source "$(dirname "$0")/common.sh"
 
 clone_github_repo() {
     target=$1
@@ -219,22 +127,16 @@ download_github_release() {
 # Main entry point
 
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <target> [architecture]"
-    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
-    echo "Available architectures: linux, macos"
-    echo "Default architecture: linux"
+    show_usage "$0"
     exit 1
 fi
 
 TARGET="$1"
 ARCH="${2:-linux}"  # Default to linux if no architecture specified
 
-# Validate architecture
-if [[ "$ARCH" != "linux" && "$ARCH" != "macos" ]]; then
-    echo "Error: Unsupported architecture '$ARCH'"
-    echo "Supported architectures: linux, macos"
-    exit 1
-fi
+# Validate architecture and target
+validate_architecture "$ARCH" || exit 1
+validate_target "$TARGET" || exit 1
 
 echo "Target: $TARGET, Architecture: $ARCH"
 
@@ -242,30 +144,26 @@ if [ "$TARGET" = "all" ]; then
     echo "Downloading all targets: ${AVAILABLE_TARGETS[*]}"
     for target in "${AVAILABLE_TARGETS[@]}"; do
         echo "Downloading $target for $ARCH..."
-        if [[ -v TARGET_REPOS[$target] ]]; then
+        if is_repo_target "$target"; then
             if target_supports_arch "$target" "$ARCH"; then
                 download_github_release "$target" "$ARCH"
             else
                 echo "Skipping $target: No $ARCH support available"
             fi
-        elif [[ -v TARGET_IMAGES[$target] ]]; then
+        elif is_docker_target "$target"; then
             pull_docker_image "$target"
         else
             echo "Error: Unknown target type for $target"
         fi
         echo ""
     done
-elif [[ -v TARGET_REPOS[$TARGET] ]]; then
+elif is_repo_target "$TARGET"; then
     if target_supports_arch "$TARGET" "$ARCH"; then
         download_github_release "$TARGET" "$ARCH"
     else
         exit 1
     fi
-elif [[ -v TARGET_IMAGES[$TARGET] ]]; then
+elif is_docker_target "$TARGET"; then
     echo "Note: Docker images are architecture-independent"
     pull_docker_image "$TARGET"
-else
-    echo "Unknown target '$TARGET'"
-    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
-    exit 1
 fi
