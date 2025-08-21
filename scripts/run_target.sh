@@ -121,7 +121,7 @@ run_boka() {
 }
 
 run_turbojam() {
-    run_docker "turbojam" "r2rationality/turbojam-fuzz:20250821-000"
+    run_docker "turbojam" "r2rationality/turbojam-fuzz:latest" "fuzzer-api $DEFAULT_SOCK"
 }
 
 case "$1" in
