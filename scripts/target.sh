@@ -45,7 +45,9 @@ TARGETS[boka.image]="acala/boka:latest"
 TARGETS[boka.cmd]="fuzz target --socket-path $DEFAULT_SOCK"
 
 # === TURBOJAM ===
-TARGETS[turbojam.image]="r2rationality/turbojam-fuzz:20250821-000"
+TARGETS[turbojam.image]="r2rationality/turbojam-fuzz:latest"
+TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
+
 
 # Get list of available targets
 get_available_targets() {
@@ -280,7 +282,7 @@ case "$ACTION" in
         elif [ -n "${TARGETS[$TARGET.cmd]}" ]; then
             run $TARGET
         else
-            echo "Don't know how to run $TARGET"
+            echo "Don't know how to run target '$TARGET'"
             exit 1
         fi
         ;;
