@@ -83,25 +83,56 @@ run_docker() {
 }
 
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 <target>"
+    echo "Usage: $0 <target> [architecture]"
     echo "Available targets: ${AVAILABLE_TARGETS[*]}"
+    echo "Available architectures: linux, macos"
+    echo "Default architecture: linux"
     exit 1
 fi
 
+TARGET="$1"
+ARCH="${2:-linux}"  # Default to linux if no architecture specified
+
+# Validate architecture
+if [[ "$ARCH" != "linux" && "$ARCH" != "macos" ]]; then
+    echo "Error: Unsupported architecture '$ARCH'"
+    echo "Supported architectures: linux, macos"
+    exit 1
+fi
+
+echo "Running target: $TARGET, Architecture: $ARCH"
+
 run_jamzig() {
-    run "jamzig" "./tiny/linux/x86_64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+    if [ "$ARCH" = "linux" ]; then
+        run "jamzig" "./tiny/linux/x86_64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+    elif [ "$ARCH" = "macos" ]; then
+        run "jamzig" "./tiny/macos/aarch64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+    fi
 }
 
 run_jamduna() {
-    run "jamduna" "./duna_target_linux -socket $DEFAULT_SOCK"
+    if [ "$ARCH" = "linux" ]; then
+        run "jamduna" "./duna_target_linux -socket $DEFAULT_SOCK"
+    elif [ "$ARCH" = "macos" ]; then
+        run "jamduna" "./duna_target_mac -socket $DEFAULT_SOCK"
+    fi
 }
 
 run_jamixir() {
-    run "jamixir" "./jamixir fuzzer --socket-path $DEFAULT_SOCK"
+    if [ "$ARCH" = "linux" ]; then
+        run "jamixir" "./jamixir fuzzer --socket-path $DEFAULT_SOCK"
+    elif [ "$ARCH" = "macos" ]; then
+        echo "Error: jamixir does not support macOS architecture"
+        exit 1
+    fi
 }
 
 run_jamzilla() {
-    run "jamzilla" "./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
+    if [ "$ARCH" = "linux" ]; then
+        run "jamzilla" "./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
+    elif [ "$ARCH" = "macos" ]; then
+        run "jamzilla" "./fuzzserver-tiny-arm64-darwin -socket $DEFAULT_SOCK"
+    fi
 }
 
 run_javajam() {
@@ -113,7 +144,12 @@ run_spacejam() {
 }
 
 run_vinwolf() {
-    run "vinwolf" "./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
+    if [ "$ARCH" = "linux" ]; then
+        run "vinwolf" "./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
+    elif [ "$ARCH" = "macos" ]; then
+        echo "Error: vinwolf does not support macOS architecture"
+        exit 1
+    fi
 }
 
 run_boka() {
@@ -124,7 +160,7 @@ run_turbojam() {
     run_docker "turbojam" "r2rationality/turbojam-fuzz:20250821-000"
 }
 
-case "$1" in
+case "$TARGET" in
     "jamzig") run_jamzig ;;
     "jamduna") run_jamduna ;;
     "jamixir") run_jamixir ;;
@@ -135,7 +171,7 @@ case "$1" in
     "boka") run_boka ;;
     "turbojam") run_turbojam ;;
     *)
-        echo "Unknown target '$1'"
+        echo "Unknown target '$TARGET'"
         echo "Available targets: ${AVAILABLE_TARGETS[*]}"
         exit 1
         ;;
