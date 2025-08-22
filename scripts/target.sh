@@ -30,7 +30,7 @@ TARGETS[jamixir.cmd.linux]="./jamixir fuzzer --socket-path $DEFAULT_SOCK"
 
 # === JAVAJAM ===
 TARGETS[javajam.repo]="javajamio/javajam-releases"
-TARGETS[javajam.file]="linux:javajam-linux-x86_64.zip macos:javajam-macos-x86_64.zip"
+TARGETS[javajam.file]="linux:javajam-linux-x86_64.zip macos:javajam-macos-aarch64.zip"
 TARGETS[javajam.cmd]="./bin/javajam fuzz $DEFAULT_SOCK"
 
 # === JAMZILLA ===
@@ -65,6 +65,32 @@ get_available_targets() {
     printf '%s\n' "${targets[@]}" | sort
 }
 
+# Returns 0 if the target supports the given architecture, 1 otherwise
+target_supports_arch() {
+    local target="$1"
+    local arch="$2"
+    # If no file entry, support all architectures
+    if [[ ! -v TARGETS[$target.file] ]]; then
+        return 0
+    fi
+    # Check if the architecture is available
+    local files="${TARGETS[$target.file]}"
+    for file_spec in $files; do
+        if [[ "$file_spec" == "$arch:"* ]]; then
+            return 0
+        fi
+    done
+
+    echo "Error: No $arch version available for $target" >&2
+    echo "Available architectures for $target:" >&2
+    for file_spec in $files; do
+        echo "  - ${file_spec%%:*}: ${file_spec#*:}" >&2
+    done
+
+    return 1
+}
+
+
 AVAILABLE_TARGETS=($(get_available_targets))
 
 clone_github_repo() {
@@ -97,9 +123,12 @@ pull_docker_image() {
         return 1
     fi
 
-    docker pull "$docker_image"
-
-    if [ $? -ne 0 ]; then
+    if ! docker info &> /dev/null; then
+        echo "Error: Docker daemon is not running or not accessible"
+        echo "Please start Docker and try again"
+        return 1
+    fi
+    if ! docker pull "$docker_image"; then
         echo "Error: Failed to pull Docker image $docker_image"
         return 1
     fi
@@ -113,7 +142,7 @@ download_github_release() {
     local target=$1
     local arch=$2
     local repo="${TARGETS[$target.repo]}"
-    local file=$(get_target_file "$target.file" "$arch")
+    local file=$(get_target_file "$target" "$arch")
 
     if [ -z "$repo" ]; then
         echo "Error: missing repository information for $target"
@@ -207,7 +236,17 @@ get_target_file() {
 
 run() {
     local target="$1"
-    local command="${TARGETS[$target.cmd]}"
+    local arch="${2:-linux}"
+    local command=""
+    # Prefer architecture-specific command, fallback to generic
+    if [[ -v TARGETS[$target.cmd.$arch] ]]; then
+        command="${TARGETS[$target.cmd.$arch]}"
+    elif [[ -v TARGETS[$target.cmd] ]]; then
+        command="${TARGETS[$target.cmd]}"
+    else
+        echo "Error: No run command specified for $target on $arch"
+        return 1
+    fi
 
     target_dir=$(find targets -name "$target*" -type d | head -1)
     # Find the subdirectory with the most recent modification date
@@ -242,6 +281,14 @@ run() {
 
     echo "Waiting for target termination (pid=$TARGET_PID)"
     wait $TARGET_PID
+}
+
+show_usage() {
+    local script_name=$1
+    echo "Usage: $script_name <get|run> <target> [architecture]"
+    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
+    echo "Available architectures: linux, macos"
+    echo "Default architecture: linux"
 }
 
 run_docker_image() {
@@ -305,8 +352,7 @@ is_repo_target() {
 
 # Main script logic
 if [ $# -lt 2 ]; then
-    echo "Usage: $0 <get|run> <target>"
-    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
+    show_usage "$0"
     exit 1
 fi
 
@@ -324,18 +370,43 @@ case "$ACTION" in
     "get")
         if [ "$TARGET" = "all" ]; then
             echo "Downloading all targets: ${AVAILABLE_TARGETS[*]}"
+            failed_targets=()
             for target in "${AVAILABLE_TARGETS[@]}"; do
+                echo "Downloading $target for $ARCH..."
                 if is_repo_target "$target"; then
                     if target_supports_arch "$target" "$ARCH"; then
+                        if ! download_github_release "$target" "$ARCH"; then
+                            echo "Failed to download $target"
+                            failed_targets+=("$target")
+                        fi
+                    else
+                        echo "Skipping $target: No $ARCH support available"
+                    fi
                 elif is_docker_target "$target"; then
                     if ! pull_docker_image "$target"; then
+                        echo "Failed to pull Docker image for $target"
+                        failed_targets+=("$target")
+                    fi
                 else
                     echo "Error: Unknown target type for $target"
+                    failed_targets+=("$target")
                 fi
                 echo ""
             done
+            # Report summary
+            if [ ${#failed_targets[@]} -eq 0 ]; then
+                echo "All targets downloaded successfully!"
+            else
+                echo "Failed to download the following targets: ${failed_targets[*]}"
+                echo "Successfully downloaded: $((${#AVAILABLE_TARGETS[@]} - ${#failed_targets[@]})) out of ${#AVAILABLE_TARGETS[@]} targets"
+                exit 1
+            fi
         elif is_repo_target "$TARGET"; then
             if target_supports_arch "$TARGET" "$ARCH"; then
+                download_github_release "$TARGET" "$ARCH"
+            else
+                exit 1
+            fi
         elif is_docker_target "$TARGET"; then
             pull_docker_image "$TARGET"
         else
@@ -345,10 +416,10 @@ case "$ACTION" in
         fi
         ;;
     "run")
-        if is_docker_target "$target"; then
+        if is_docker_target "$TARGET"; then
             run_docker_image $TARGET
-        elif is_repo_target "$target"; then
-            run $TARGET
+        elif is_repo_target "$TARGET"; then
+            run $TARGET $ARCH
         else
             echo "Unknown target '$TARGET'"
             echo "Available targets: ${AVAILABLE_TARGETS[*]}"
