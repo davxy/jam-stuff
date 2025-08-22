@@ -5,39 +5,43 @@ set -e
 DEFAULT_SOCK="/tmp/jam_target.sock"
 
 # Target configuration using associative array with dot notation
+# Architecture-specific files: use format "arch:filename" for multiple architectures
 declare -A TARGETS
 
 # === VINWOLF ===
 TARGETS[vinwolf.repo]="bloppan/conformance_testing"
-TARGETS[vinwolf.cmd]="./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
+TARGETS[vinwolf.cmd.linux]="./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
 
 # === JAMZIG ===
 TARGETS[jamzig.repo]="jamzig/conformance-releases"
-TARGETS[jamzig.cmd]="./tiny/linux/x86_64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+TARGETS[jamzig.cmd.linux]="./tiny/linux/x86_64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+TARGETS[jamzig.cmd.macos]="./tiny/macos/aarch64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
 
 # === JAMDUNA ===
 TARGETS[jamduna.repo]="jam-duna/jamtestnet"
-TARGETS[jamduna.file]="duna_target_linux"
-TARGETS[jamduna.cmd]="./duna_target_linux -socket $DEFAULT_SOCK"
+TARGETS[jamduna.file]="linux:duna_target_linux macos:duna_target_mac"
+TARGETS[jamduna.cmd.linux]="./duna_target_linux -socket $DEFAULT_SOCK"
+TARGETS[jamduna.cmd.macos]="./duna_target_mac -socket $DEFAULT_SOCK"
 
 # === JAMIXIR ===
 TARGETS[jamixir.repo]="jamixir/jamixir-releases"
-TARGETS[jamixir.file]="jamixir_linux-x86-64-gp_0.6.7_v0.2.6_tiny.tar.gz"
-TARGETS[jamixir.cmd]="./jamixir fuzzer --socket-path $DEFAULT_SOCK"
+TARGETS[jamixir.file]="linux:jamixir_linux-x86-64-gp_0.6.7_v0.2.6_tiny.tar.gz"
+TARGETS[jamixir.cmd.linux]="./jamixir fuzzer --socket-path $DEFAULT_SOCK"
 
 # === JAVAJAM ===
 TARGETS[javajam.repo]="javajamio/javajam-releases"
-TARGETS[javajam.file]="javajam-linux-x86_64.zip"
+TARGETS[javajam.file]="linux:javajam-linux-x86_64.zip macos:javajam-macos-x86_64.zip"
 TARGETS[javajam.cmd]="./bin/javajam fuzz $DEFAULT_SOCK"
 
 # === JAMZILLA ===
 TARGETS[jamzilla.repo]="ascrivener/jamzilla-conformance-releases"
-TARGETS[jamzilla.file]="fuzzserver-tiny-amd64-linux"
-TARGETS[jamzilla.cmd]="./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
+TARGETS[jamzilla.file]="linux:fuzzserver-tiny-amd64-linux macos:fuzzserver-tiny-arm64-darwin"
+TARGETS[jamzilla.cmd.linux]="./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
+TARGETS[jamzilla.cmd.macos]="./fuzzserver-tiny-arm64-darwin -socket $DEFAULT_SOCK"
 
 # === SPACEJAM ===
 TARGETS[spacejam.repo]="spacejamapp/specjam"
-TARGETS[spacejam.file]="spacejam-0.6.7-linux-amd64.tar.gz"
+TARGETS[spacejam.file]="linux:spacejam-0.6.7-linux-amd64.tar.gz macos:spacejam-0.6.7-macos-arm64.tar.gz"
 TARGETS[spacejam.cmd]="./spacejam -vv fuzz target $DEFAULT_SOCK"
 
 # === BOKA ===
@@ -107,16 +111,18 @@ pull_docker_image() {
 
 download_github_release() {
     local target=$1
+    local arch=$2
     local repo="${TARGETS[$target.repo]}"
-    local file="${TARGETS[$target.file]}"
+    local file=$(get_target_file "$target.file" "$arch")
 
     if [ -z "$repo" ]; then
         echo "Error: missing repository information for $target"
         return 1
     fi
 
-    if [ -z $file ]; then
-        clone_github_repo $target $repo
+    if [ -z "$file" ]; then
+        echo "Info: No release file specified for $target on $arch, cloning repository instead"
+        clone_github_repo "$target" "$repo"
         return 0
     fi
 
@@ -173,6 +179,30 @@ download_github_release() {
         chmod +x "$file"
     fi
     cd - > /dev/null
+}
+
+# Function to get the correct file for a target and architecture
+get_target_file() {
+    local target=$1
+    local arch=$2
+    local files="${TARGETS[$target.file]}"
+    
+    if [ -z "$files" ]; then
+        echo ""
+        return 0
+    fi
+    
+    # Parse architecture-specific files
+    for file_spec in $files; do
+        if [[ "$file_spec" == "$arch:"* ]]; then
+            echo "${file_spec#*:}"
+            return 0
+        fi
+    done
+    
+    # If requested arch not found, return empty (let caller handle the error)
+    echo ""
+    return 1
 }
 
 run() {
@@ -243,6 +273,36 @@ run_docker_image() {
     wait $TARGET_PID
 }
 
+validate_target() {
+    local target=$1
+    if [[ "$target" != "all" ]] && ! is_repo_target "$target" && ! is_docker_target "$target"; then
+        echo "Unknown target '$target'" >&2
+        echo "Available targets: ${AVAILABLE_TARGETS[*]} all" >&2
+        return 1
+    fi
+    return 0
+}
+
+validate_architecture() {
+    local arch=$1
+    if [[ "$arch" != "linux" && "$arch" != "macos" ]]; then
+        echo "Error: Unsupported architecture '$arch'" >&2
+        echo "Supported architectures: linux, macos" >&2
+        return 1
+    fi
+    return 0
+}
+
+is_docker_target() {
+    local target=$1
+    [[ -v TARGETS[$target.image] ]]
+}
+
+is_repo_target() {
+    local target=$1
+    [[ -v TARGETS[$target.repo] ]]
+}
+
 # Main script logic
 if [ $# -lt 2 ]; then
     echo "Usage: $0 <get|run> <target>"
@@ -252,25 +312,31 @@ fi
 
 ACTION="$1"
 TARGET="$2"
+ARCH="${3:-linux}"  # Default to linux if no architecture specified
+
+validate_architecture "$ARCH" || exit 1
+validate_target "$TARGET" || exit 1
+
+echo "Action: $ACTION, Target: $TARGET, Architecture: $ARCH"
+
 
 case "$ACTION" in
     "get")
         if [ "$TARGET" = "all" ]; then
             echo "Downloading all targets: ${AVAILABLE_TARGETS[*]}"
             for target in "${AVAILABLE_TARGETS[@]}"; do
-                echo "Downloading $target..."
-                if [ -n "${TARGETS[$target.repo]}" ]; then
-                    download_github_release "$target"
-                elif [ -n "${TARGETS[$target.image]}" ]; then
-                    pull_docker_image "$target"
+                if is_repo_target "$target"; then
+                    if target_supports_arch "$target" "$ARCH"; then
+                elif is_docker_target "$target"; then
+                    if ! pull_docker_image "$target"; then
                 else
                     echo "Error: Unknown target type for $target"
                 fi
                 echo ""
             done
-        elif [ -n "${TARGETS[$TARGET.repo]}" ]; then
-            download_github_release "$TARGET"
-        elif [ -n "${TARGETS[$TARGET.image]}" ]; then
+        elif is_repo_target "$TARGET"; then
+            if target_supports_arch "$TARGET" "$ARCH"; then
+        elif is_docker_target "$TARGET"; then
             pull_docker_image "$TARGET"
         else
             echo "Unknown target '$TARGET'"
@@ -279,9 +345,9 @@ case "$ACTION" in
         fi
         ;;
     "run")
-        if [ -n "${TARGETS[$TARGET.image]}" ]; then
+        if is_docker_target "$target"; then
             run_docker_image $TARGET
-        elif [ -n "${TARGETS[$TARGET.cmd]}" ]; then
+        elif is_repo_target "$target"; then
             run $TARGET
         else
             echo "Unknown target '$TARGET'"
