@@ -178,8 +178,13 @@ download_github_release() {
     mv "$file" "$target_dir_rev/"
 
     # Check if file is an archive and extract it, or make it executable
-    cd "$target_dir_rev"
-    if [[ "$file" == *.zip ]]; then
+    local post="${TARGETS[$target.post]}"
+    if [ ! -z "$post" ]; then
+        cd "$target_dir_rev"
+        pushd $target_dir_rev
+        bash -c "$post"
+        popd
+    elif [[ "$file" == *.zip ]]; then
         echo "Extracting zip archive: $file"
         unzip "$file"
         rm "$file"
