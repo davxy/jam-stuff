@@ -14,6 +14,16 @@ TARGETS[vinwolf.cmd]="./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
 # === JAMZIG ===
 TARGETS[jamzig.repo]="jamzig/conformance-releases"
 TARGETS[jamzig.cmd]="./tiny/linux/x86_64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+ 
+# === PYJAMAZ ===
+TARGETS[pyjamaz.repo]="jamdottech/pyjamaz-conformance-releases"
+TARGETS[pyjamaz.post]="cd gp-0.6.7 && unzip pyjamaz-linux-x86_64.zip"
+TARGETS[pyjamaz.cmd]="./gp-0.6.7/pyjamaz fuzzer target --socket-path $DEFAULT_SOCK"
+
+# === JAMPY ===
+TARGETS[jampy.repo]="dakk/jampy-releases"
+TARGETS[jampy.post]="cd dist && unzip jampy-target-0.7.0_x86-64.zip"
+TARGETS[jampy.cmd]="./dist/jampy-target-0.7.0_x86-64/jampy-target-0.7.0_x86-64 --socket-file $DEFAULT_SOCK"
 
 # === JAMDUNA ===
 TARGETS[jamduna.repo]="jam-duna/jamtestnet"
@@ -64,8 +74,8 @@ get_available_targets() {
 AVAILABLE_TARGETS=($(get_available_targets))
 
 clone_github_repo() {
-    target=$1
-    repo=$2
+    local target=$1
+    local repo=$2
     local temp_dir=$(mktemp -d)
     git clone "https://github.com/$repo" --depth 1 "$temp_dir"
     local commit_hash=$(cd "$temp_dir" && git rev-parse --short HEAD)
@@ -76,6 +86,14 @@ clone_github_repo() {
     rm -f "$target_dir/latest"
     ln -s "$target_dir_rev" "$target_dir/latest"
     echo "Cloned to $target_dir"
+
+    local post="${TARGETS[$target.post]}"
+    if [ ! -z "$post" ]; then
+        pushd $target_dir_rev
+        bash -c "$post"
+        popd
+    fi
+    
     return 0
 }
 
