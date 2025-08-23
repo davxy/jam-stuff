@@ -66,13 +66,15 @@ AVAILABLE_TARGETS=($(get_available_targets))
 clone_github_repo() {
     target=$1
     repo=$2
-    echo "WARN: cloning $target repo"
     local temp_dir=$(mktemp -d)
     git clone "https://github.com/$repo" --depth 1 "$temp_dir"
     local commit_hash=$(cd "$temp_dir" && git rev-parse --short HEAD)
-    local target_dir="targets/$target/$commit_hash"
-    mkdir -p "targets/$target"
-    mv "$temp_dir" "$target_dir"
+    local target_dir=$(realpath "targets/$target")
+    mkdir -p "$target_dir"
+    local target_dir_rev="$target_dir/$commit_hash"
+    mv "$temp_dir" "$target_dir_rev"
+    rm -f "$target_dir/latest"
+    ln -s "$target_dir_rev" "$target_dir/latest"
     echo "Cloned to $target_dir"
     return 0
 }
@@ -148,14 +150,17 @@ download_github_release() {
     echo "Successfully downloaded $file"
     echo "File size: $(ls -lh $file | awk '{print $5}')"
 
-    local download_dir="targets/$target/${latest_tag}"
+    local target_dir=$(realpath "targets/$target")
+    local target_dir_rev="$target_dir/${latest_tag}"
 
-    mkdir -p "$download_dir"
-    echo "Moving to $download_dir..."
-    mv "$file" "$download_dir/"
+    rm -f "$target_dir/latest"
+    ln -s "$target_dir_rev" "$target_dir/latest"
+
+    mkdir -p "$target_dir_rev"
+    mv "$file" "$target_dir_rev/"
 
     # Check if file is an archive and extract it, or make it executable
-    cd "$download_dir"
+    cd "$target_dir_rev"
     if [[ "$file" == *.zip ]]; then
         echo "Extracting zip archive: $file"
         unzip "$file"
@@ -180,9 +185,8 @@ run() {
     local command="${TARGETS[$target.cmd]}"
 
     target_dir=$(find targets -name "$target*" -type d | head -1)
-    # Find the subdirectory with the most recent modification date
-    target_dir=$(find "$target_dir" -maxdepth 1 -type d | tail -n +2 | xargs ls -dt | head -1)
-    echo "Run $target on $target_dir"
+    target_rev=$(realpath "$target_dir/latest")
+    echo "Run $target on $target_rev"
 
     # Set up trap to cleanup on exit
     cleanup() {
@@ -205,7 +209,7 @@ run() {
 
     trap cleanup EXIT INT TERM
 
-    pushd "$target_dir" > /dev/null
+    pushd "$target_rev" > /dev/null
     bash -c "$command" &
     TARGET_PID=$!
     popd > /dev/null
