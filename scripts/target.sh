@@ -59,7 +59,7 @@ TARGETS[turbojam.image]="r2rationality/turbojam-fuzz:latest"
 TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
 
 # === GRAYMATTER ===
-TARGETS[graymatter.image]="gm"
+TARGETS[graymatter.image]="ghcr.io/jambrains/graymatter/gm:latest"
 TARGETS[graymatter.cmd]="fuzz-m1-target --listen $DEFAULT_SOCK"
 
 # Get list of available targets
