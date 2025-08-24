@@ -58,6 +58,9 @@ TARGETS[boka.cmd]="fuzz target --socket-path $DEFAULT_SOCK"
 TARGETS[turbojam.image]="r2rationality/turbojam-fuzz:latest"
 TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
 
+# === GRAYMATTER ===
+TARGETS[graymatter.image]="ghcr.io/jambrains/graymatter/gm:conformance-fuzzer-latest"
+TARGETS[graymatter.cmd]="fuzz-m1-target --listen $DEFAULT_SOCK"
 
 # Get list of available targets
 get_available_targets() {
