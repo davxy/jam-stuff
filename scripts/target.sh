@@ -5,7 +5,6 @@ set -e
 DEFAULT_SOCK="/tmp/jam_target.sock"
 
 # Target configuration using associative array with dot notation
-# Architecture-specific files: use format "arch:filename" for multiple architectures
 declare -A TARGETS
 
 # === VINWOLF ===
@@ -59,10 +58,10 @@ TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
 ### Auxiliary functions:
 show_usage() {
     local script_name=$1
-    echo "Usage: $script_name <get|run> <target> [architecture]"
+    echo "Usage: $script_name <get|run> <target>"
     echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
-    echo "Available architectures: linux, macos"
-    echo "Default architecture: linux"
+    echo "Available OSes: linux, macos"
+    echo "Default OS: linux (auto-detected)"
 }
 
 validate_target() {
@@ -75,11 +74,11 @@ validate_target() {
     return 0
 }
 
-validate_architecture() {
-    local arch=$1
-    if [[ "$arch" != "linux" && "$arch" != "macos" ]]; then
-        echo "Error: Unsupported architecture '$arch'" >&2
-        echo "Supported architectures: linux, macos" >&2
+validate_os() {
+    local os=$1
+    if [[ "$os" != "linux" && "$os" != "macos" ]]; then
+        echo "Error: Unsupported OS '$os'" >&2
+        echo "Supported OSes: linux, macos" >&2
         return 1
     fi
     return 0
@@ -109,31 +108,31 @@ get_available_targets() {
 
 AVAILABLE_TARGETS=($(get_available_targets))
 
-# Returns 0 if the target supports the given architecture, 1 otherwise
-target_supports_arch() {
+# Returns 0 if the target supports the given os, 1 otherwise
+target_supports_os() {
     local target="$1"
-    local arch="$2"
-    # If no file entry, support all architectures
+    local os="$2"
+    # If no file entry, support all OSes
     if [[ ! -v TARGETS[$target.file] ]]; then
         return 0
     fi
-    # If file.<arch> entry exists, support only that arch
-    if [[ -v TARGETS[$target.file.$arch] ]]; then
+    # If file.<os> entry exists, support only that OS
+    if [[ -v TARGETS[$target.file.$os] ]]; then
         return 0
     fi
-    # If file entry exists, support both architectures
+    # If file entry exists, support both OSes
     if [[ -v TARGETS[$target.file] ]]; then
         return 0
     fi
-    echo "Error: No $arch version available for $target" >&2
+    echo "Error: No $os version available for $target" >&2
     return 1
 }
 
-# Function to get the correct file for a target and architecture
+# Function to get the correct file for a target and os
 get_target_file() {
     local target=$1
-    local arch=$2
-    local file="${TARGETS[$target.file.$arch]}"
+    local os=$2
+    local file="${TARGETS[$target.file.$os]}"
     if [ -z "$file" ]; then
         file="${TARGETS[$target.file]}"
         if [ -z "$file" ]; then
@@ -192,9 +191,9 @@ pull_docker_image() {
 
 download_github_release() {
     local target=$1
-    local arch=$2
+    local os=$2
     local repo="${TARGETS[$target.repo]}"
-    local file=$(get_target_file "$target" "$arch")
+    local file=$(get_target_file "$target" "$os")
 
     if [ -z "$repo" ]; then
         echo "Error: missing repository information for $target"
@@ -202,7 +201,7 @@ download_github_release() {
     fi
 
     if [ -z "$file" ]; then
-        echo "Info: No release file specified for $target on $arch, cloning repository instead"
+        echo "Info: No release file specified for $target on $os, cloning repository instead"
         clone_github_repo "$target" "$repo"
         return 0
     fi
@@ -264,15 +263,15 @@ download_github_release() {
 
 run() {
     local target="$1"
-    local arch="${2:-linux}"
+    local os="${2:-linux}"
     local command=""
-    # Prefer architecture-specific command, fallback to generic
-    if [[ -v TARGETS[$target.cmd.$arch] ]]; then
-        command="${TARGETS[$target.cmd.$arch]}"
+    # Prefer os-specific command, fallback to generic
+    if [[ -v TARGETS[$target.cmd.$os] ]]; then
+        command="${TARGETS[$target.cmd.$os]}"
     elif [[ -v TARGETS[$target.cmd] ]]; then
         command="${TARGETS[$target.cmd]}"
     else
-        echo "Error: No run command specified for $target on $arch"
+        echo "Error: No run command specified for $target on $os"
         return 1
     fi
 
@@ -348,12 +347,25 @@ fi
 
 ACTION="$1"
 TARGET="$2"
-ARCH="${3:-linux}"  # Default to linux if no architecture specified
+# Detect OS using uname
+UNAME_S=$(uname -s)
+case "$UNAME_S" in
+    Linux)
+        OS="linux"
+        ;;
+    Darwin)
+        OS="macos"
+        ;;
+    *)
+        echo "Unsupported OS: $UNAME_S" >&2
+        exit 1
+        ;;
+esac
 
-validate_architecture "$ARCH" || exit 1
+validate_os "$OS" || exit 1
 validate_target "$TARGET" || exit 1
 
-echo "Action: $ACTION, Target: $TARGET, Architecture: $ARCH"
+echo "Action: $ACTION, Target: $TARGET, OS: $OS"
 
 
 case "$ACTION" in
@@ -362,15 +374,15 @@ case "$ACTION" in
             echo "Downloading all targets: ${AVAILABLE_TARGETS[*]}"
             failed_targets=()
             for target in "${AVAILABLE_TARGETS[@]}"; do
-                echo "Downloading $target for $ARCH..."
+                echo "Downloading $target for $OS..."
                 if is_repo_target "$target"; then
-                    if target_supports_arch "$target" "$ARCH"; then
-                        if ! download_github_release "$target" "$ARCH"; then
+                    if target_supports_os "$target" "$OS"; then
+                        if ! download_github_release "$target" "$OS"; then
                             echo "Failed to download $target"
                             failed_targets+=("$target")
                         fi
                     else
-                        echo "Skipping $target: No $ARCH support available"
+                        echo "Skipping $target: No $OS support available"
                     fi
                 elif is_docker_target "$target"; then
                     if ! pull_docker_image "$target"; then
@@ -392,8 +404,8 @@ case "$ACTION" in
                 exit 1
             fi
         elif is_repo_target "$TARGET"; then
-            if target_supports_arch "$TARGET" "$ARCH"; then
-                download_github_release "$TARGET" "$ARCH"
+            if target_supports_os "$TARGET" "$OS"; then
+                download_github_release "$TARGET" "$OS"
             else
                 exit 1
             fi
@@ -409,7 +421,7 @@ case "$ACTION" in
         if is_docker_target "$TARGET"; then
             run_docker_image $TARGET
         elif is_repo_target "$TARGET"; then
-            run $TARGET $ARCH
+            run $TARGET $OS
         else
             echo "Unknown target '$TARGET'"
             echo "Available targets: ${AVAILABLE_TARGETS[*]}"
