@@ -12,22 +12,27 @@ declare -A TARGETS
 
 # === VINWOLF ===
 TARGETS[vinwolf.repo]="bloppan/conformance_testing"
-TARGETS[vinwolf.cmd.linux]="./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_SOCK"
+TARGETS[vinwolf.clone]=1
+TARGETS[vinwolf.file.linux]="linux/tiny/x86_64/vinwolf-target"
+TARGETS[vinwolf.cmd.linux]="${TARGETS[vinwolf.file.linux]}"
+TARGETS[vinwolf.cmd.args]="--fuzz $DEFAULT_SOCK"
 
 # === JAMZIG ===
 TARGETS[jamzig.repo]="jamzig/conformance-releases"
 TARGETS[jamzig.clone]=1
-TARGETS[jamzig.file.linux]="./tiny/linux/x86_64/jam_conformance_target"
-TARGETS[jamzig.file.macos]="./tiny/linux/aarch64/jam_conformance_target"
+TARGETS[jamzig.file.linux]="tiny/linux/x86_64/jam_conformance_target"
+TARGETS[jamzig.file.macos]="tiny/linux/aarch64/jam_conformance_target"
 TARGETS[jamzig.cmd.linux]="${TARGETS[jamzig.file.linux]}"
 TARGETS[jamzig.cmd.macos]="${TARGETS[jamzig.file.macos]}"
 TARGETS[jamzig.cmd.args]="-vv --socket $DEFAULT_SOCK"
 
 # === PYJAMAZ ===
 TARGETS[pyjamaz.repo]="jamdottech/pyjamaz-conformance-releases"
-TARGETS[jamzig.clone]=1
-TARGETS[pyjamaz.post]="cd gp-0.6.7 && unzip pyjamaz-linux-x86_64.zip"
-TARGETS[pyjamaz.cmd]="./gp-0.6.7/pyjamaz fuzzer target --socket-path $DEFAULT_SOCK"
+TARGETS[pyjamaz.clone]=1
+TARGETS[pyjamaz.file.linux]="gp-0.7.0/pyjamaz-0.1.5-linux-x86_64.zip"
+TARGETS[pyjamaz.file.macos]="gp-0.7.0/pyjamaz-0.1.5-macos-aarch64.zip"
+TARGETS[pyjamaz.cmd]="pyjamaz"
+TARGETS[pyjamaz.cmd.args]="fuzzer target --socket-path $DEFAULT_SOCK"
 
 # === JAMPY ===
 TARGETS[jampy.repo]="dakk/jampy-releases"
@@ -179,6 +184,7 @@ post_actions() {
     local target=$1
     local os=$2
     local file=$(get_target_file "$target" "$os")
+    echo "Performing post actions"
     pushd "targets/$target/latest"
     local post="${TARGETS[$target.post]}"
     if [ ! -z "$post" ]; then
@@ -219,6 +225,11 @@ clone_github_repo() {
 
     mkdir -p "$target_dir"
     local target_dir_rev="$target_dir/$commit_hash"
+    if [ -d "$target_dir_rev" ]; then
+        echo "$target_dir_rev already exists"
+        rm -rf "$temp_dir"
+        return 0
+    fi
     mv "$temp_dir" "$target_dir_rev"
 
     ln -sf "$(realpath $target_dir_rev)" "$target_dir/latest"
@@ -324,9 +335,13 @@ run() {
         return 1
     fi
 
-    local target_dir=$(find targets -name "$target*" -type d | head -1)
-    local target_rev="$target_dir/latest"
-    echo "Run $target on $target_rev"
+    local target_dir="targets/$target/latest"
+    if [ ! -d "$target_dir" ]; then
+        echo "Error: Target dir not found: $target_dir"
+        echo "Get the target first with: get $target"
+        exit 1
+    fi
+    echo "Run $target on $target_dir"
 
     # Set up trap to cleanup on exit
     cleanup() {
@@ -349,8 +364,8 @@ run() {
 
     trap cleanup EXIT INT TERM
 
-    pushd "$target_rev" > /dev/null
-    bash -c "$command $args" &
+    pushd "$target_dir" > /dev/null
+    bash -c "./$command $args" &
     TARGET_PID=$!
     popd > /dev/null
 
