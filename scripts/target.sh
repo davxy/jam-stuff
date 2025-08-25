@@ -18,30 +18,34 @@ TARGETS[jamzig.cmd.linux]="./tiny/linux/x86_64/jam_conformance_target -vv --sock
 TARGETS[jamzig.cmd.macos]="./tiny/macos/aarch64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
 
 # === JAMDUNA ===
+TARGETS[jamduna.file.linux]="duna_target_linux"
+TARGETS[jamduna.file.macos]="duna_target_mac"
 TARGETS[jamduna.repo]="jam-duna/jamtestnet"
-TARGETS[jamduna.file]="linux:duna_target_linux macos:duna_target_mac"
 TARGETS[jamduna.cmd.linux]="./duna_target_linux -socket $DEFAULT_SOCK"
 TARGETS[jamduna.cmd.macos]="./duna_target_mac -socket $DEFAULT_SOCK"
 
 # === JAMIXIR ===
+TARGETS[jamixir.file.linux]="jamixir_linux-x86-64-gp_0.6.7_v0.2.6_tiny.tar.gz"
 TARGETS[jamixir.repo]="jamixir/jamixir-releases"
-TARGETS[jamixir.file]="linux:jamixir_linux-x86-64-gp_0.6.7_v0.2.6_tiny.tar.gz"
 TARGETS[jamixir.cmd.linux]="./jamixir fuzzer --socket-path $DEFAULT_SOCK"
 
 # === JAVAJAM ===
+TARGETS[javajam.file]="javajam-linux-x86_64.zip"
+TARGETS[javajam.file.macos]="javajam-macos-aarch64.zip"
 TARGETS[javajam.repo]="javajamio/javajam-releases"
-TARGETS[javajam.file]="linux:javajam-linux-x86_64.zip macos:javajam-macos-aarch64.zip"
 TARGETS[javajam.cmd]="./bin/javajam fuzz $DEFAULT_SOCK"
 
 # === JAMZILLA ===
+TARGETS[jamzilla.file.linux]="fuzzserver-tiny-amd64-linux"
+TARGETS[jamzilla.file.macos]="fuzzserver-tiny-arm64-darwin"
 TARGETS[jamzilla.repo]="ascrivener/jamzilla-conformance-releases"
-TARGETS[jamzilla.file]="linux:fuzzserver-tiny-amd64-linux macos:fuzzserver-tiny-arm64-darwin"
 TARGETS[jamzilla.cmd.linux]="./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
 TARGETS[jamzilla.cmd.macos]="./fuzzserver-tiny-arm64-darwin -socket $DEFAULT_SOCK"
 
 # === SPACEJAM ===
+TARGETS[spacejam.file.linux]="spacejam-0.6.7-linux-amd64.tar.gz"
+TARGETS[spacejam.file.macos]="spacejam-0.6.7-macos-arm64.tar.gz"
 TARGETS[spacejam.repo]="spacejamapp/specjam"
-TARGETS[spacejam.file]="linux:spacejam-0.6.7-linux-amd64.tar.gz macos:spacejam-0.6.7-macos-arm64.tar.gz"
 TARGETS[spacejam.cmd]="./spacejam -vv fuzz target $DEFAULT_SOCK"
 
 # === BOKA ===
@@ -52,6 +56,44 @@ TARGETS[boka.cmd]="fuzz target --socket-path $DEFAULT_SOCK"
 TARGETS[turbojam.image]="r2rationality/turbojam-fuzz:latest"
 TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
 
+### Auxiliary functions:
+show_usage() {
+    local script_name=$1
+    echo "Usage: $script_name <get|run> <target> [architecture]"
+    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
+    echo "Available architectures: linux, macos"
+    echo "Default architecture: linux"
+}
+
+validate_target() {
+    local target=$1
+    if [[ "$target" != "all" ]] && ! is_repo_target "$target" && ! is_docker_target "$target"; then
+        echo "Unknown target '$target'" >&2
+        echo "Available targets: ${AVAILABLE_TARGETS[*]} all" >&2
+        return 1
+    fi
+    return 0
+}
+
+validate_architecture() {
+    local arch=$1
+    if [[ "$arch" != "linux" && "$arch" != "macos" ]]; then
+        echo "Error: Unsupported architecture '$arch'" >&2
+        echo "Supported architectures: linux, macos" >&2
+        return 1
+    fi
+    return 0
+}
+
+is_docker_target() {
+    local target=$1
+    [[ -v TARGETS[$target.image] ]]
+}
+
+is_repo_target() {
+    local target=$1
+    [[ -v TARGETS[$target.repo] ]]
+}
 
 # Get list of available targets
 get_available_targets() {
@@ -65,6 +107,8 @@ get_available_targets() {
     printf '%s\n' "${targets[@]}" | sort
 }
 
+AVAILABLE_TARGETS=($(get_available_targets))
+
 # Returns 0 if the target supports the given architecture, 1 otherwise
 target_supports_arch() {
     local target="$1"
@@ -73,25 +117,33 @@ target_supports_arch() {
     if [[ ! -v TARGETS[$target.file] ]]; then
         return 0
     fi
-    # Check if the architecture is available
-    local files="${TARGETS[$target.file]}"
-    for file_spec in $files; do
-        if [[ "$file_spec" == "$arch:"* ]]; then
-            return 0
-        fi
-    done
-
+    # If file.<arch> entry exists, support only that arch
+    if [[ -v TARGETS[$target.file.$arch] ]]; then
+        return 0
+    fi
+    # If file entry exists, support both architectures
+    if [[ -v TARGETS[$target.file] ]]; then
+        return 0
+    fi
     echo "Error: No $arch version available for $target" >&2
-    echo "Available architectures for $target:" >&2
-    for file_spec in $files; do
-        echo "  - ${file_spec%%:*}: ${file_spec#*:}" >&2
-    done
-
     return 1
 }
 
-
-AVAILABLE_TARGETS=($(get_available_targets))
+# Function to get the correct file for a target and architecture
+get_target_file() {
+    local target=$1
+    local arch=$2
+    local file="${TARGETS[$target.file.$arch]}"
+    if [ -z "$file" ]; then
+        file="${TARGETS[$target.file]}"
+        if [ -z "$file" ]; then
+            echo ""
+            return 1
+        fi
+    fi
+    echo "$file"
+    return 0
+}
 
 clone_github_repo() {
     target=$1
@@ -210,30 +262,6 @@ download_github_release() {
     cd - > /dev/null
 }
 
-# Function to get the correct file for a target and architecture
-get_target_file() {
-    local target=$1
-    local arch=$2
-    local files="${TARGETS[$target.file]}"
-    
-    if [ -z "$files" ]; then
-        echo ""
-        return 0
-    fi
-    
-    # Parse architecture-specific files
-    for file_spec in $files; do
-        if [[ "$file_spec" == "$arch:"* ]]; then
-            echo "${file_spec#*:}"
-            return 0
-        fi
-    done
-    
-    # If requested arch not found, return empty (let caller handle the error)
-    echo ""
-    return 1
-}
-
 run() {
     local target="$1"
     local arch="${2:-linux}"
@@ -283,14 +311,6 @@ run() {
     wait $TARGET_PID
 }
 
-show_usage() {
-    local script_name=$1
-    echo "Usage: $script_name <get|run> <target> [architecture]"
-    echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
-    echo "Available architectures: linux, macos"
-    echo "Default architecture: linux"
-}
-
 run_docker_image() {
     local target="$1"
     local image="${TARGETS[$target.image]}"
@@ -320,37 +340,7 @@ run_docker_image() {
     wait $TARGET_PID
 }
 
-validate_target() {
-    local target=$1
-    if [[ "$target" != "all" ]] && ! is_repo_target "$target" && ! is_docker_target "$target"; then
-        echo "Unknown target '$target'" >&2
-        echo "Available targets: ${AVAILABLE_TARGETS[*]} all" >&2
-        return 1
-    fi
-    return 0
-}
-
-validate_architecture() {
-    local arch=$1
-    if [[ "$arch" != "linux" && "$arch" != "macos" ]]; then
-        echo "Error: Unsupported architecture '$arch'" >&2
-        echo "Supported architectures: linux, macos" >&2
-        return 1
-    fi
-    return 0
-}
-
-is_docker_target() {
-    local target=$1
-    [[ -v TARGETS[$target.image] ]]
-}
-
-is_repo_target() {
-    local target=$1
-    [[ -v TARGETS[$target.repo] ]]
-}
-
-# Main script logic
+### Main script logic
 if [ $# -lt 2 ]; then
     show_usage "$0"
     exit 1
