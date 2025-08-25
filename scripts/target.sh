@@ -36,40 +36,43 @@ TARGETS[pyjamaz.cmd.args]="fuzzer target --socket-path $DEFAULT_SOCK"
 
 # === JAMPY ===
 TARGETS[jampy.repo]="dakk/jampy-releases"
-TARGETS[jamzig.clone]=1
-TARGETS[jampy.post]="cd dist && unzip jampy-target-0.7.0_x86-64.zip"
-TARGETS[jampy.cmd]="./dist/jampy-target-0.7.0_x86-64/jampy-target-0.7.0_x86-64 --socket-file $DEFAULT_SOCK"
+TARGETS[jampy.clone]=1
+TARGETS[jampy.file.linux]="dist/jampy-target-0.7.0_x86-64.zip"
+TARGETS[jampy.cmd]="jampy-target-0.7.0_x86-64/jampy-target-0.7.0_x86-64"
+TARGETS[jampy.cmd.args]="--socket-file $DEFAULT_SOCK"
 
 # === JAMDUNA ===
 TARGETS[jamduna.repo]="jam-duna/jamtestnet"
 TARGETS[jamduna.file.linux]="duna_target_linux"
 TARGETS[jamduna.file.macos]="duna_target_mac"
-TARGETS[jamduna.cmd.linux]="./duna_target_linux -socket $DEFAULT_SOCK"
-TARGETS[jamduna.cmd.macos]="./duna_target_mac -socket $DEFAULT_SOCK"
+TARGETS[jamduna.cmd.linux]="${TARGETS[jamduna.file.linux]}"
+TARGETS[jamduna.cmd.macos]="${TARGETS[jamduna.file.macos]}"
+TARGETS[jamduna.cmd.args]="-socket $DEFAULT_SOCK"
 
 # === JAMIXIR ===
 TARGETS[jamixir.repo]="jamixir/jamixir-releases"
-TARGETS[jamixir.file.linux]="jamixir_linux-x86-64-gp_0.6.7_v0.2.6_tiny.tar.gz"
-TARGETS[jamixir.cmd.linux]="./jamixir fuzzer --socket-path $DEFAULT_SOCK"
+TARGETS[jamixir.file.linux]="jamixir_linux-x86-64_0.6.7_tiny.tar.gz"
+TARGETS[jamixir.cmd]="jamixir fuzzer --socket-path $DEFAULT_SOCK"
 
-# === JAVAJAM ===
+# === JAVAJAM === FIXME
 TARGETS[javajam.repo]="javajamio/javajam-releases"
 TARGETS[javajam.file.linux]="javajam-linux-x86_64.zip"
 TARGETS[javajam.file.macos]="javajam-macos-aarch64.zip"
-TARGETS[javajam.cmd]="./bin/javajam fuzz $DEFAULT_SOCK"
+TARGETS[javajam.cmd]="bin/javajam fuzz $DEFAULT_SOCK"
 
 # === JAMZILLA ===
 TARGETS[jamzilla.repo]="ascrivener/jamzilla-conformance-releases"
 TARGETS[jamzilla.file.linux]="fuzzserver-tiny-amd64-linux"
 TARGETS[jamzilla.file.macos]="fuzzserver-tiny-arm64-darwin"
-TARGETS[jamzilla.cmd.linux]="./fuzzserver-tiny-amd64-linux -socket $DEFAULT_SOCK"
-TARGETS[jamzilla.cmd.macos]="./fuzzserver-tiny-arm64-darwin -socket $DEFAULT_SOCK"
+TARGETS[jamzilla.cmd.linux]="fuzzserver-tiny-amd64-linux"
+TARGETS[jamzilla.cmd.macos]="fuzzserver-tiny-arm64-darwin"
+TARGETS[jamzilla.cmd.args]="-socket $DEFAULT_SOCK"
 
 # === SPACEJAM ===
 TARGETS[spacejam.repo]="spacejamapp/specjam"
-TARGETS[spacejam.file.linux]="spacejam-0.6.7-linux-amd64.tar.gz"
-TARGETS[spacejam.file.macos]="spacejam-0.6.7-macos-arm64.tar.gz"
-TARGETS[spacejam.cmd]="./spacejam -vv fuzz target $DEFAULT_SOCK"
+TARGETS[spacejam.file.linux]="spacejam-0.7.0-linux-amd64.tar.gz"
+TARGETS[spacejam.file.macos]="spacejam-0.7.0-macos-arm64.tar.gz"
+TARGETS[spacejam.cmd]="spacejam -vv fuzz target $DEFAULT_SOCK"
 
 # === BOKA ===
 TARGETS[boka.image]="acala/boka:latest"
