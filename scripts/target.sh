@@ -54,7 +54,7 @@ TARGETS[jamixir.repo]="jamixir/jamixir-releases"
 TARGETS[jamixir.file.linux]="jamixir_linux-x86-64_0.6.7_tiny.tar.gz"
 TARGETS[jamixir.cmd]="jamixir fuzzer --socket-path $DEFAULT_SOCK"
 
-# === JAVAJAM === FIXME
+# === JAVAJAM ===
 TARGETS[javajam.repo]="javajamio/javajam-releases"
 TARGETS[javajam.file.linux]="javajam-linux-x86_64.zip"
 TARGETS[javajam.file.macos]="javajam-macos-aarch64.zip"
