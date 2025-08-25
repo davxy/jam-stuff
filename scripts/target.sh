@@ -15,6 +15,16 @@ TARGETS[vinwolf.cmd.linux]="./linux/tiny/x86_64/vinwolf-target --fuzz $DEFAULT_S
 TARGETS[jamzig.repo]="jamzig/conformance-releases"
 TARGETS[jamzig.cmd.linux]="./tiny/linux/x86_64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
 TARGETS[jamzig.cmd.macos]="./tiny/macos/aarch64/jam_conformance_target -vv --socket $DEFAULT_SOCK"
+ 
+# === PYJAMAZ ===
+TARGETS[pyjamaz.repo]="jamdottech/pyjamaz-conformance-releases"
+TARGETS[pyjamaz.post]="cd gp-0.6.7 && unzip pyjamaz-linux-x86_64.zip"
+TARGETS[pyjamaz.cmd]="./gp-0.6.7/pyjamaz fuzzer target --socket-path $DEFAULT_SOCK"
+
+# === JAMPY ===
+TARGETS[jampy.repo]="dakk/jampy-releases"
+TARGETS[jampy.post]="cd dist && unzip jampy-target-0.7.0_x86-64.zip"
+TARGETS[jampy.cmd]="./dist/jampy-target-0.7.0_x86-64/jampy-target-0.7.0_x86-64 --socket-file $DEFAULT_SOCK"
 
 # === JAMDUNA ===
 TARGETS[jamduna.file.linux]="duna_target_linux"
@@ -54,6 +64,11 @@ TARGETS[boka.cmd]="fuzz target --socket-path $DEFAULT_SOCK"
 # === TURBOJAM ===
 TARGETS[turbojam.image]="r2rationality/turbojam-fuzz:latest"
 TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
+
+# === GRAYMATTER ===
+TARGETS[graymatter.image]="ghcr.io/jambrains/graymatter/gm:conformance-fuzzer-latest"
+TARGETS[graymatter.cmd]="fuzz-m1-target --listen $DEFAULT_SOCK"
+
 
 ### Auxiliary functions:
 show_usage() {
@@ -145,16 +160,26 @@ get_target_file() {
 }
 
 clone_github_repo() {
-    target=$1
-    repo=$2
-    echo "WARN: cloning $target repo"
+    local target=$1
+    local repo=$2
     local temp_dir=$(mktemp -d)
     git clone "https://github.com/$repo" --depth 1 "$temp_dir"
     local commit_hash=$(cd "$temp_dir" && git rev-parse --short HEAD)
-    local target_dir="targets/$target/$commit_hash"
-    mkdir -p "targets/$target"
-    mv "$temp_dir" "$target_dir"
+    local target_dir=$(realpath "targets/$target")
+    mkdir -p "$target_dir"
+    local target_dir_rev="$target_dir/$commit_hash"
+    mv "$temp_dir" "$target_dir_rev"
+    rm -f "$target_dir/latest"
+    ln -s "$target_dir_rev" "$target_dir/latest"
     echo "Cloned to $target_dir"
+
+    local post="${TARGETS[$target.post]}"
+    if [ ! -z "$post" ]; then
+        pushd $target_dir_rev
+        bash -c "$post"
+        popd
+    fi
+    
     return 0
 }
 
@@ -234,15 +259,23 @@ download_github_release() {
     echo "Successfully downloaded $file"
     echo "File size: $(ls -lh $file | awk '{print $5}')"
 
-    local download_dir="targets/$target/${latest_tag}"
+    local target_dir=$(realpath "targets/$target")
+    local target_dir_rev="$target_dir/${latest_tag}"
 
-    mkdir -p "$download_dir"
-    echo "Moving to $download_dir..."
-    mv "$file" "$download_dir/"
+    rm -f "$target_dir/latest"
+    ln -s "$target_dir_rev" "$target_dir/latest"
+
+    mkdir -p "$target_dir_rev"
+    mv "$file" "$target_dir_rev/"
 
     # Check if file is an archive and extract it, or make it executable
-    cd "$download_dir"
-    if [[ "$file" == *.zip ]]; then
+    local post="${TARGETS[$target.post]}"
+    if [ ! -z "$post" ]; then
+        cd "$target_dir_rev"
+        pushd $target_dir_rev
+        bash -c "$post"
+        popd
+    elif [[ "$file" == *.zip ]]; then
         echo "Extracting zip archive: $file"
         unzip "$file"
         rm "$file"
@@ -276,9 +309,8 @@ run() {
     fi
 
     target_dir=$(find targets -name "$target*" -type d | head -1)
-    # Find the subdirectory with the most recent modification date
-    target_dir=$(find "$target_dir" -maxdepth 1 -type d | tail -n +2 | xargs ls -dt | head -1)
-    echo "Run $target on $target_dir"
+    target_rev=$(realpath "$target_dir/latest")
+    echo "Run $target on $target_rev"
 
     # Set up trap to cleanup on exit
     cleanup() {
@@ -301,7 +333,7 @@ run() {
 
     trap cleanup EXIT INT TERM
 
-    pushd "$target_dir" > /dev/null
+    pushd "$target_rev" > /dev/null
     bash -c "$command" &
     TARGET_PID=$!
     popd > /dev/null

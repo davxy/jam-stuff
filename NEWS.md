@@ -1,3 +1,12 @@
+[23-08-25]
+
+The reports table has been updated to include results from the new Turbojam implementation.
+
+Cleanup: All previously sorted traces have been removed from the reports table to reduce clutter.
+
+This concludes the 0.6.7 fuzzing session regarding new trace generation. Progress tracking
+continues for teams that still need to address issues with previously delivered 0.6.7 traces.
+
 [21-08-25]
 
 Two new highly controversial reports: 1755796851 1755796995
