@@ -350,7 +350,7 @@ run() {
     trap cleanup EXIT INT TERM
 
     pushd "$target_rev" > /dev/null
-    bash -c "$command" "" &
+    bash -c "$command $args" &
     TARGET_PID=$!
     popd > /dev/null
 
