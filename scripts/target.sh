@@ -84,7 +84,7 @@ TARGETS[turbojam.cmd]="fuzzer-api $DEFAULT_SOCK"
 
 # === GRAYMATTER ===
 TARGETS[graymatter.image]="ghcr.io/jambrains/graymatter/gm:conformance-fuzzer-latest"
-TARGETS[graymatter.cmd]="fuzz-m1-target --listen $DEFAULT_SOCK"
+TARGETS[graymatter.cmd]="fuzz-m1-target --stay-open --listen $DEFAULT_SOCK"
 
 ### Auxiliary functions:
 
