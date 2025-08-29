@@ -16,6 +16,7 @@
 | vinwolf | 4306.791461 |
 | pyjamaz | 12592.32126 |
 | boka | 16773.636854 |
+| jamixir | 16733.899225999998 |
 
 ## import_mean
 
@@ -33,6 +34,7 @@
 | vinwolf | 1165.75897416 |
 | pyjamaz | 2963.920823650001 |
 | boka | 3992.44279826 |
+| jamixir | 4184.41043237 |
 
 ## import_min
 
@@ -50,6 +52,7 @@
 | spacejam | 19.946016 |
 | vinwolf | 44.287459 |
 | jamduna | 54.406788999999996 |
+| jamixir | 342.247583 |
 
 ## import_p50
 
@@ -67,6 +70,7 @@
 | vinwolf | 738.403 |
 | pyjamaz | 1363.839 |
 | boka | 1677.517 |
+| jamixir | 2028.832 |
 
 ## import_p75
 
@@ -83,6 +87,7 @@
 | jamts | 439.723 |
 | vinwolf | 1935.896 |
 | pyjamaz | 5186.699 |
+| jamixir | 6740.096 |
 | boka | 6925.978 |
 
 ## import_p90
@@ -101,6 +106,7 @@
 | vinwolf | 2633.063 |
 | pyjamaz | 7104.005 |
 | boka | 9265.12 |
+| jamixir | 9984.735 |
 
 ## import_p99
 
@@ -117,6 +123,7 @@
 | jamts | 942.176 |
 | vinwolf | 3681.156 |
 | pyjamaz | 10905.759 |
+| jamixir | 14532.887 |
 | boka | 15410.062 |
 
 ## import_std_dev
@@ -134,5 +141,6 @@
 | jamts | 275.5023694364715 |
 | vinwolf | 1136.0332269118076 |
 | pyjamaz | 3337.401339409811 |
+| jamixir | 4314.9205402199195 |
 | boka | 4540.03081201447 |
 

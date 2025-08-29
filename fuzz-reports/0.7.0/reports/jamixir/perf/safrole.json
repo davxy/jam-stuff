@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "Jamixir",
+    "app_version": {
+      "major": 0,
+      "minor": 2,
+      "patch": 6
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 29,
+    "import_min": 339.560377,
+    "import_max": 438.636313,
+    "import_mean": 380.30222642999985,
+    "import_p50": 380.182,
+    "import_p75": 396.196,
+    "import_p90": 412.016,
+    "import_p99": 426.088,
+    "import_std_dev": 23.647535581542698
+  }
+}
