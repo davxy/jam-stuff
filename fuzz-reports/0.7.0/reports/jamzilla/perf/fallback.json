@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "jamzilla",
+    "app_version": {
+      "major": 0,
+      "minor": 1,
+      "patch": 0
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 96,
+    "import_min": 4.8162780000000005,
+    "import_max": 59.2566,
+    "import_mean": 9.976896700000003,
+    "import_p50": 5.704,
+    "import_p75": 6.088,
+    "import_p90": 6.852,
+    "import_p99": 57.468,
+    "import_std_dev": 14.155468098326539
+  }
+}
