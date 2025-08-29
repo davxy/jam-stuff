@@ -77,7 +77,7 @@ TARGETS[spacejam.cmd]="spacejam fuzz target $DEFAULT_SOCK"
 # === JAMTS ===
 TARGETS[jamts.repo]="vekexasia/tsjam-releases"
 TARGETS[jamts.file.linux]="tsjam-fuzzer-target.tgz"
-TARGETS[jamts.cmd]="tsjam-fuzzer-target/jam-fuzzer-target"
+TARGETS[jamts.cmd]="tsjam-fuzzer-target/jam-fuzzer-target --socket $DEFAULT_SOCK"
 TARGETS[jamts.env]="JAM_CONSTANTS=tiny"
 
 # === BOKA ===
