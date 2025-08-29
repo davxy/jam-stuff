@@ -51,7 +51,7 @@ TARGETS[jamduna.cmd.args]="-socket $DEFAULT_SOCK"
 
 # === JAMIXIR ===
 TARGETS[jamixir.repo]="jamixir/jamixir-releases"
-TARGETS[jamixir.file.linux]="jamixir_linux-x86-64_0.6.7_tiny.tar.gz"
+TARGETS[jamixir.file.linux]="jamixir_linux-x86-64_0.7.0_tiny.tar.gz"
 TARGETS[jamixir.cmd]="jamixir fuzzer --socket-path $DEFAULT_SOCK"
 
 # === JAVAJAM ===
