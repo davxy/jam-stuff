@@ -1,0 +1,56 @@
+{
+    "config": {
+        "seed": "42",
+        "profile": {
+            "Empty": null
+        },
+        "safrole": true,
+        "max_work_items": 1,
+        "max_service_keys": 10,
+        "mutation_ratio": 0.0,
+        "max_mutations": 3,
+        "max_steps": 100
+    },
+    "stats": {
+        "steps": 100,
+        "imported": 100,
+        "import_max_step": 16,
+        "import_min": 1.553741,
+        "import_max": 11.087363,
+        "import_mean": 6.084681509999999,
+        "import_p50": 8.56,
+        "import_p75": 9.318,
+        "import_p90": 9.969,
+        "import_p99": 10.709,
+        "import_std_dev": 3.838815168445722
+    },
+    "target": {
+        "info": {
+            "name": "polkajam",
+            "app_version": {
+                "major": 0,
+                "minor": 1,
+                "patch": 25
+            },
+            "jam_version": {
+                "major": 0,
+                "minor": 7,
+                "patch": 0
+            }
+        },
+        "stats": {
+            "steps": 100,
+            "imported": 100,
+            "import_max_step": 79,
+            "import_min": 0.874652,
+            "import_max": 11.247112,
+            "import_mean": 6.458527849999999,
+            "import_p50": 8.546,
+            "import_p75": 9.261,
+            "import_p90": 10.015,
+            "import_p99": 10.895,
+            "import_std_dev": 3.7179608909844886
+        }
+    },
+    "diff": null
+}
