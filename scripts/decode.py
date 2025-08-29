@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
  
-from jam_types import Struct, Header, OpaqueHash, ByteArray, ByteSequence, Vec, ScaleBytes, Block, String, Enum, Null, Bool, U8, U32, F64, TimeSlot
+from jam_types import Struct, Header, OpaqueHash, ByteArray, ByteSequence, Vec, ScaleBytes, Block, String, Enum, Null, Bool, U8, U32, U64, F64, TimeSlot
 from jam_types import spec, n
 import json
 import argparse
@@ -104,13 +104,39 @@ class KeyValueDiff(Struct):
 class KeyValueDiffs(Vec):
     sub_type = n(KeyValueDiff)
 
-class Report(Struct):
+class StateDiff(Struct):
     type_mapping = [
-        ('target', n(PeerInfo)),
-        ('config', n(ReportConfig)),
-        ('fuzz_state', n(FuzzState)),
         ('roots', n(RootDiff)),
         ('keyvals', n(KeyValueDiffs)),
+    ]
+    
+class ReportStatistics(Struct):
+    type_mapping = [
+	    ('steps', n(U64)),
+    	('imported', n(U64)),
+    	('import_max_step', n(U64)),
+    	('import_min', n(F64)),
+    	('import_max', n(F64)),
+    	('import_mean', n(F64)),
+    	('import_p50', n(F64)),
+    	('import_p75', n(F64)),
+    	('import_p90', n(F64)),
+    	('import_p99', n(F64)),
+    	('import_std_dev', n(F64))
+    ]
+
+class TargetReport(Struct):
+    type_mapping = [
+        ('info', n(PeerInfo)),
+        ('stats', n(ReportStatistics))
+    ]
+
+class Report(Struct):
+    type_mapping = [
+        ('config', n(ReportConfig)),
+        ('stats', n(ReportStatistics)),
+        ('target', "Option<TargetReport>"),
+        ('diff', "Option<StateDiff>"),
     ]
 
 class SetState(Struct):

@@ -1,0 +1,56 @@
+{
+    "config": {
+        "seed": "42",
+        "profile": {
+            "Empty": null
+        },
+        "safrole": false,
+        "max_work_items": 1,
+        "max_service_keys": 10,
+        "mutation_ratio": 0.0,
+        "max_mutations": 3,
+        "max_steps": 10000
+    },
+    "stats": {
+        "steps": 100,
+        "imported": 100,
+        "import_max_step": 13,
+        "import_min": 1.646382,
+        "import_max": 23.923441999999998,
+        "import_mean": 6.801049339999999,
+        "import_p50": 9.872,
+        "import_p75": 10.296,
+        "import_p90": 10.624,
+        "import_p99": 10.864,
+        "import_std_dev": 4.505190765878945
+    },
+    "target": {
+        "info": {
+            "name": "boka-fuzzing-target",
+            "app_version": {
+                "major": 0,
+                "minor": 1,
+                "patch": 0
+            },
+            "jam_version": {
+                "major": 0,
+                "minor": 7,
+                "patch": 0
+            }
+        },
+        "stats": {
+            "steps": 100,
+            "imported": 100,
+            "import_max_step": 79,
+            "import_min": 5.290095,
+            "import_max": 36.021022,
+            "import_mean": 19.891533829999997,
+            "import_p50": 20.243,
+            "import_p75": 26.984,
+            "import_p90": 31.311,
+            "import_p99": 34.947,
+            "import_std_dev": 8.84626348676339
+        }
+    },
+    "diff": null
+}
