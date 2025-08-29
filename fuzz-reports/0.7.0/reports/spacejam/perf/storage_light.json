@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "spacejam",
+    "app_version": {
+      "major": 0,
+      "minor": 0,
+      "patch": 6
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 60,
+    "import_min": 19.620942999999997,
+    "import_max": 157.74177,
+    "import_mean": 59.784037569999995,
+    "import_p50": 51.645,
+    "import_p75": 72.008,
+    "import_p90": 114.04,
+    "import_p99": 145.058,
+    "import_std_dev": 36.41713829854765
+  }
+}
