@@ -24,7 +24,7 @@ TARGETS[jamzig.file.linux]="tiny/linux/x86_64/jam_conformance_target"
 TARGETS[jamzig.file.macos]="tiny/linux/aarch64/jam_conformance_target"
 TARGETS[jamzig.cmd.linux]="${TARGETS[jamzig.file.linux]}"
 TARGETS[jamzig.cmd.macos]="${TARGETS[jamzig.file.macos]}"
-TARGETS[jamzig.cmd.args]="-vv --socket $DEFAULT_SOCK"
+TARGETS[jamzig.cmd.args]="--socket $DEFAULT_SOCK"
 
 # === PYJAMAZ ===
 TARGETS[pyjamaz.repo]="jamdottech/pyjamaz-conformance-releases"
@@ -72,7 +72,7 @@ TARGETS[jamzilla.cmd.args]="-socket $DEFAULT_SOCK"
 TARGETS[spacejam.repo]="spacejamapp/specjam"
 TARGETS[spacejam.file.linux]="spacejam-0.7.0-linux-amd64.tar.gz"
 TARGETS[spacejam.file.macos]="spacejam-0.7.0-macos-arm64.tar.gz"
-TARGETS[spacejam.cmd]="spacejam -vv fuzz target $DEFAULT_SOCK"
+TARGETS[spacejam.cmd]="spacejam fuzz target $DEFAULT_SOCK"
 
 # === BOKA ===
 TARGETS[boka.image]="acala/boka:latest"

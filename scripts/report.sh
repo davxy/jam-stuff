@@ -27,7 +27,7 @@ find "$FOLDER" -name "report.bin" -type f | while read -r report_bin; do
     output_dir="output/$subfolder_name"
     mkdir -p "$output_dir"
     
-    "$SCRIPT_DIR/decode.py" "$report_bin" > "$output_dir/report.json"
+    jam-decode "$report_bin" > "$output_dir/report.json"
     
     cp "$report_bin" "$output_dir/"
     
