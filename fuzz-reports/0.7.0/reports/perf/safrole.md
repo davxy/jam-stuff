@@ -16,6 +16,7 @@
 | jampy | 125.439509 |
 | pyjamaz | 151.13152 |
 | jamduna | 205.46320200000002 |
+| jamixir | 438.636313 |
 | javajam | 604.503637 |
 
 ## import_mean
@@ -35,6 +36,7 @@
 | vinwolf | 89.45104911000001 |
 | javajam | 120.09717823999998 |
 | jamduna | 123.73630830999997 |
+| jamixir | 380.30222642999985 |
 
 ## import_min
 
@@ -53,6 +55,7 @@
 | vinwolf | 45.766417 |
 | jamduna | 49.673565 |
 | jampy | 57.90829900000001 |
+| jamixir | 339.560377 |
 
 ## import_p50
 
@@ -71,6 +74,7 @@
 | vinwolf | 106.096 |
 | javajam | 113.15 |
 | jamduna | 168.044 |
+| jamixir | 380.182 |
 
 ## import_p75
 
@@ -89,6 +93,7 @@
 | vinwolf | 112.609 |
 | javajam | 114.176 |
 | jamduna | 171.523 |
+| jamixir | 396.196 |
 
 ## import_p90
 
@@ -107,6 +112,7 @@
 | javajam | 123.246 |
 | pyjamaz | 141.668 |
 | jamduna | 187.244 |
+| jamixir | 412.016 |
 
 ## import_p99
 
@@ -124,6 +130,7 @@
 | jampy | 124.317 |
 | pyjamaz | 149.515 |
 | jamduna | 197.326 |
+| jamixir | 426.088 |
 | javajam | 603.773 |
 
 ## import_std_dev
@@ -139,6 +146,7 @@
 | jamzilla | 14.147814250607261 |
 | jamts | 14.535440254101868 |
 | jampy | 22.621201321949293 |
+| jamixir | 23.647535581542698 |
 | vinwolf | 29.742533368088548 |
 | pyjamaz | 48.91498264715243 |
 | jamduna | 60.496743701319026 |
