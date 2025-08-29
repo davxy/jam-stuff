@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "tsjam-0.7.0-tiny",
+    "app_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 60,
+    "import_min": 1.474822,
+    "import_max": 400.47213,
+    "import_mean": 90.26463271,
+    "import_p50": 65.683,
+    "import_p75": 115.357,
+    "import_p90": 225.742,
+    "import_p99": 334.845,
+    "import_std_dev": 96.96690483303873
+  }
+}

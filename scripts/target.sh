@@ -24,7 +24,7 @@ TARGETS[jamzig.file.linux]="tiny/linux/x86_64/jam_conformance_target"
 TARGETS[jamzig.file.macos]="tiny/linux/aarch64/jam_conformance_target"
 TARGETS[jamzig.cmd.linux]="${TARGETS[jamzig.file.linux]}"
 TARGETS[jamzig.cmd.macos]="${TARGETS[jamzig.file.macos]}"
-TARGETS[jamzig.cmd.args]="-vv --socket $DEFAULT_SOCK"
+TARGETS[jamzig.cmd.args]="--socket $DEFAULT_SOCK"
 
 # === PYJAMAZ ===
 TARGETS[pyjamaz.repo]="jamdottech/pyjamaz-conformance-releases"
@@ -72,7 +72,13 @@ TARGETS[jamzilla.cmd.args]="-socket $DEFAULT_SOCK"
 TARGETS[spacejam.repo]="spacejamapp/specjam"
 TARGETS[spacejam.file.linux]="spacejam-0.7.0-linux-amd64.tar.gz"
 TARGETS[spacejam.file.macos]="spacejam-0.7.0-macos-arm64.tar.gz"
-TARGETS[spacejam.cmd]="spacejam -vv fuzz target $DEFAULT_SOCK"
+TARGETS[spacejam.cmd]="spacejam fuzz target $DEFAULT_SOCK"
+
+# === JAMTS ===
+TARGETS[jamts.repo]="vekexasia/tsjam-releases"
+TARGETS[jamts.file.linux]="tsjam-fuzzer-target.tgz"
+TARGETS[jamts.cmd]="tsjam-fuzzer-target/jam-fuzzer-target --socket $DEFAULT_SOCK"
+TARGETS[jamts.env]="JAM_CONSTANTS=tiny"
 
 # === BOKA ===
 TARGETS[boka.image]="acala/boka:latest"
@@ -366,6 +372,13 @@ run() {
     }
 
     trap cleanup EXIT INT TERM
+
+    local env="${TARGETS[${target}.env]}"
+
+    # Export environment variables if specified
+    if [ ! -z "$env" ]; then
+        export $env
+    fi
 
     pushd "$target_dir" > /dev/null
     bash -c "./$command $args" &

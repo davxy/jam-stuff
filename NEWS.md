@@ -1,3 +1,14 @@
+[29-08-25]
+
+Performance reports for protocol version 0.7.0 are now available for participating teams.
+These reports provide benchmarking data across different JAM test vectors traces categories.
+
+Performance reports can be found in `fuzz-reports/0.7.0/reports/[team]/perf/` directories.
+These benchmarks help track implementation efficiency and identify optimization opportunities
+as teams advance their JAM protocol implementations.
+
+All performance results were generated on an AMD Ryzen Threadripper 3970X 32-Core (64) @ 4.55 GHz running Linux.
+
 [23-08-25]
 
 The reports table has been updated to include results from the new Turbojam implementation.

@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "polkajam",
+    "app_version": {
+      "major": 0,
+      "minor": 1,
+      "patch": 25
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 26,
+    "import_min": 1.193171,
+    "import_max": 11.912311,
+    "import_mean": 6.233850239999998,
+    "import_p50": 8.762,
+    "import_p75": 9.341,
+    "import_p90": 10.015,
+    "import_p99": 10.924,
+    "import_std_dev": 3.8642061848377662
+  }
+}
