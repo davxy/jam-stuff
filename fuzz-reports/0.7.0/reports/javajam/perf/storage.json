@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "JavaJAM",
+    "app_version": {
+      "major": 0,
+      "minor": 2,
+      "patch": 6
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 96,
+    "import_min": 17.860643999999997,
+    "import_max": 1530.786639,
+    "import_mean": 381.42012608,
+    "import_p50": 323.387,
+    "import_p75": 608.68,
+    "import_p90": 840.939,
+    "import_p99": 1334.251,
+    "import_std_dev": 380.03268993438587
+  }
+}
