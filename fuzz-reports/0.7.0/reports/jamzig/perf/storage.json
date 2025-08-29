@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "jamzig-target",
+    "app_version": {
+      "major": 0,
+      "minor": 1,
+      "patch": 0
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 96,
+    "import_min": 2.055803,
+    "import_max": 120.816322,
+    "import_mean": 35.82117880999999,
+    "import_p50": 34.202,
+    "import_p75": 50.048,
+    "import_p90": 74.746,
+    "import_p99": 112.785,
+    "import_std_dev": 29.874239425177553
+  }
+}
