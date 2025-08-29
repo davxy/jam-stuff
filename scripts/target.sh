@@ -74,6 +74,12 @@ TARGETS[spacejam.file.linux]="spacejam-0.7.0-linux-amd64.tar.gz"
 TARGETS[spacejam.file.macos]="spacejam-0.7.0-macos-arm64.tar.gz"
 TARGETS[spacejam.cmd]="spacejam fuzz target $DEFAULT_SOCK"
 
+# === JAMTS ===
+TARGETS[jamts.repo]="vekexasia/tsjam-releases"
+TARGETS[jamts.file.linux]="tsjam-fuzzer-target.tgz"
+TARGETS[jamts.cmd]="tsjam-fuzzer-target/jam-fuzzer-target"
+TARGETS[jamts.env]="JAM_CONSTANTS=tiny"
+
 # === BOKA ===
 TARGETS[boka.image]="acala/boka:latest"
 TARGETS[boka.cmd]="fuzz target --socket-path $DEFAULT_SOCK"
@@ -366,6 +372,13 @@ run() {
     }
 
     trap cleanup EXIT INT TERM
+
+    local env="${TARGETS[${target}.env]}"
+
+    # Export environment variables if specified
+    if [ ! -z "$env" ]; then
+        export $env
+    fi
 
     pushd "$target_dir" > /dev/null
     bash -c "./$command $args" &
