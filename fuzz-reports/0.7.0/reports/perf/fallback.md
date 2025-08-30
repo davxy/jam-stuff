@@ -15,7 +15,7 @@
 | tsjam | 52.48994 |
 | turbojam | 53.542769 |
 | jamzilla | 59.2566 |
-| jampy | 73.38624 |
+| jampy | 78.83293900000001 |
 | vinwolf | 101.21979999999999 |
 | jamixir | 446.492778 |
 
@@ -35,7 +35,7 @@
 | boka | 11.82218458 |
 | spacejam | 12.706778550000003 |
 | vinwolf | 54.11115660000001 |
-| jampy | 62.48840471999997 |
+| jampy | 70.51634605000001 |
 | jamixir | 357.79096313999986 |
 
 ## import_min
@@ -54,7 +54,7 @@
 | spacejam | 8.718922000000001 |
 | javajam | 10.255297 |
 | vinwolf | 49.263014 |
-| jampy | 57.714389 |
+| jampy | 67.270521 |
 | jamixir | 335.09051 |
 
 ## import_p50
@@ -73,7 +73,7 @@
 | javajam | 10.778 |
 | spacejam | 11.549 |
 | vinwolf | 49.945 |
-| jampy | 61.901 |
+| jampy | 70.476 |
 | jamixir | 349.282 |
 
 ## import_p75
@@ -92,7 +92,7 @@
 | spacejam | 12.118 |
 | boka | 12.88 |
 | vinwolf | 50.629 |
-| jampy | 63.648 |
+| jampy | 71.308 |
 | jamixir | 370.608 |
 
 ## import_p90
@@ -111,7 +111,7 @@
 | pyjamaz | 13.185 |
 | boka | 14.765 |
 | vinwolf | 51.582 |
-| jampy | 66.306 |
+| jampy | 71.993 |
 | jamixir | 387.937 |
 
 ## import_p99
@@ -129,7 +129,7 @@
 | turbojam | 44.508 |
 | tsjam | 50.563 |
 | jamzilla | 57.468 |
-| jampy | 68.866 |
+| jampy | 74.003 |
 | vinwolf | 100.259 |
 | jamixir | 408.287 |
 
@@ -140,7 +140,7 @@
 | polkajam_perf_int | 0.4203376137886223 |
 | javajam | 0.47127080109786085 |
 | polkajam | 0.639189038675229 |
-| jampy | 2.7738127835094812 |
+| jampy | 1.6969083751076792 |
 | spacejam | 4.279207817793877 |
 | jamduna | 5.008118399999995 |
 | boka | 5.383574523849681 |

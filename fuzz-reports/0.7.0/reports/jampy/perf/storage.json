@@ -1,0 +1,28 @@
+{
+  "info": {
+    "name": "jampy",
+    "app_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    },
+    "jam_version": {
+      "major": 0,
+      "minor": 7,
+      "patch": 0
+    }
+  },
+  "stats": {
+    "steps": 100,
+    "imported": 100,
+    "import_max_step": 14,
+    "import_min": 72.31611000000001,
+    "import_max": 11545.168256,
+    "import_mean": 2366.109330360002,
+    "import_p50": 979.948,
+    "import_p75": 4030.871,
+    "import_p90": 6267.833,
+    "import_p99": 9273.082,
+    "import_std_dev": 2732.1492274484754
+  }
+}
