@@ -4,7 +4,7 @@
     "app_version": {
       "major": 0,
       "minor": 2,
-      "patch": 1
+      "patch": 2
     },
     "jam_version": {
       "major": 0,
@@ -15,14 +15,14 @@
   "stats": {
     "steps": 100,
     "imported": 100,
-    "import_max_step": 89,
-    "import_min": 45.766417,
-    "import_max": 120.570886,
-    "import_mean": 89.45104911000001,
-    "import_p50": 106.096,
-    "import_p75": 112.609,
-    "import_p90": 119.031,
-    "import_p99": 120.159,
-    "import_std_dev": 29.742533368088548
+    "import_max_step": 55,
+    "import_min": 49.333027,
+    "import_max": 120.49335599999999,
+    "import_mean": 89.69458195999995,
+    "import_p50": 105.612,
+    "import_p75": 112.686,
+    "import_p90": 118.407,
+    "import_p99": 119.837,
+    "import_std_dev": 29.605176951092457
   }
 }

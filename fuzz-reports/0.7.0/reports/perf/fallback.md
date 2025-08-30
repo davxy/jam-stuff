@@ -9,14 +9,14 @@
 | javajam | 14.143694 |
 | spacejam | 28.259553999999998 |
 | boka | 31.340597999999996 |
-| jamzig | 38.545643 |
+| jamzig | 31.570784999999997 |
 | pyjamaz | 48.507303 |
 | jamduna | 50.081184 |
 | tsjam | 52.48994 |
 | turbojam | 53.542769 |
 | jamzilla | 59.2566 |
 | jampy | 78.83293900000001 |
-| vinwolf | 101.21979999999999 |
+| vinwolf | 101.83729299999999 |
 | jamixir | 446.492778 |
 
 ## import_mean
@@ -26,7 +26,7 @@
 | jamduna | 0.5008118399999997 |
 | polkajam_perf_int | 1.553038389999999 |
 | polkajam | 1.7037406099999997 |
-| jamzig | 2.11363239 |
+| jamzig | 1.7204263999999996 |
 | turbojam | 3.6399815300000022 |
 | tsjam | 5.54929492 |
 | jamzilla | 9.976896700000003 |
@@ -34,7 +34,7 @@
 | pyjamaz | 11.553612489999997 |
 | boka | 11.82218458 |
 | spacejam | 12.706778550000003 |
-| vinwolf | 54.11115660000001 |
+| vinwolf | 53.94323595 |
 | jampy | 70.51634605000001 |
 | jamixir | 357.79096313999986 |
 
@@ -53,7 +53,7 @@
 | boka | 5.676775999999999 |
 | spacejam | 8.718922000000001 |
 | javajam | 10.255297 |
-| vinwolf | 49.263014 |
+| vinwolf | 49.267590999999996 |
 | jampy | 67.270521 |
 | jamixir | 335.09051 |
 
@@ -72,7 +72,7 @@
 | boka | 10.447 |
 | javajam | 10.778 |
 | spacejam | 11.549 |
-| vinwolf | 49.945 |
+| vinwolf | 49.835 |
 | jampy | 70.476 |
 | jamixir | 349.282 |
 
@@ -91,7 +91,7 @@
 | pyjamaz | 11.582 |
 | spacejam | 12.118 |
 | boka | 12.88 |
-| vinwolf | 50.629 |
+| vinwolf | 50.291 |
 | jampy | 71.308 |
 | jamixir | 370.608 |
 
@@ -110,7 +110,7 @@
 | spacejam | 12.969 |
 | pyjamaz | 13.185 |
 | boka | 14.765 |
-| vinwolf | 51.582 |
+| vinwolf | 51.142 |
 | jampy | 71.993 |
 | jamixir | 387.937 |
 
@@ -122,7 +122,7 @@
 | polkajam_perf_int | 2.562 |
 | polkajam | 2.723 |
 | javajam | 11.762 |
-| jamzig | 25.578 |
+| jamzig | 20.5 |
 | spacejam | 26.512 |
 | boka | 27.919 |
 | pyjamaz | 42.623 |
@@ -130,7 +130,7 @@
 | tsjam | 50.563 |
 | jamzilla | 57.468 |
 | jampy | 74.003 |
-| vinwolf | 100.259 |
+| vinwolf | 99.929 |
 | jamixir | 408.287 |
 
 ## import_std_dev
@@ -144,11 +144,11 @@
 | spacejam | 4.279207817793877 |
 | jamduna | 5.008118399999995 |
 | boka | 5.383574523849681 |
-| jamzig | 7.3269270314983626 |
+| jamzig | 5.9657619563234165 |
 | pyjamaz | 9.650507505623453 |
 | turbojam | 12.436223343106905 |
 | tsjam | 13.41605288703718 |
-| vinwolf | 13.674768031956033 |
+| vinwolf | 13.651289849371233 |
 | jamzilla | 14.155468098326539 |
 | jamixir | 22.355075200993976 |
 

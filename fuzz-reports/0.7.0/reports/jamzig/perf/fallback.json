@@ -17,12 +17,12 @@
     "imported": 100,
     "import_max_step": 12,
     "import_min": 0.0,
-    "import_max": 38.545643,
-    "import_mean": 2.11363239,
+    "import_max": 31.570784999999997,
+    "import_mean": 1.7204263999999996,
     "import_p50": 0.0,
     "import_p75": 0.0,
     "import_p90": 0.0,
-    "import_p99": 25.578,
-    "import_std_dev": 7.3269270314983626
+    "import_p99": 20.5,
+    "import_std_dev": 5.9657619563234165
   }
 }
