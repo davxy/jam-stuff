@@ -248,7 +248,7 @@ clone_github_repo() {
     return 0
 }
 
-pull_docker_image() {
+get_docker_image() {
     local target=$1
     local docker_image="${TARGETS[$target.image]}"
 
@@ -280,7 +280,7 @@ pull_docker_image() {
     return 0
 }
 
-download_github_release() {
+get_github_release() {
     local target=$1
     local os=$2
     local repo="${TARGETS[$target.repo]}"
@@ -324,7 +324,8 @@ download_github_release() {
     mkdir -p "$target_dir_rev"
     mv "$file" "$target_dir_rev/"
 
-    ln -sf "$(realpath $target_dir_rev)" "$target_dir/latest"
+    rm -f "$target_dir/latest"
+    ln -s "$(realpath $target_dir_rev)" "$target_dir/latest"
 
     post_actions "$target" "$os"
 }
@@ -443,7 +444,7 @@ case "$ACTION" in
                 echo "Downloading $TARGET for $OS..."
                 if is_repo_target; then
                     if target_supports_os "$TARGET" "$OS"; then
-                        if ! download_github_release "$TARGET" "$OS"; then
+                        if ! get_github_release "$TARGET" "$OS"; then
                             echo "Failed to download $TARGET"
                             failed_targets+=("$TARGET")
                         fi
@@ -451,7 +452,7 @@ case "$ACTION" in
                         echo "Skipping $TARGET: No $OS support available"
                     fi
                 elif is_docker_target; then
-                    if ! pull_docker_image "$TARGET"; then
+                    if ! get_docker_image "$TARGET"; then
                         echo "Failed to pull Docker image for $TARGET"
                         failed_targets+=("$TARGET")
                     fi
@@ -471,12 +472,12 @@ case "$ACTION" in
             fi
         elif is_repo_target "$TARGET"; then
             if target_supports_os "$TARGET" "$OS"; then
-                download_github_release "$TARGET" "$OS"
+                get_github_release "$TARGET" "$OS"
             else
                 exit 1
             fi
         elif is_docker_target "$TARGET"; then
-            pull_docker_image "$TARGET"
+            get_docker_image "$TARGET"
         else
             echo "Unknown target '$TARGET'"
             echo "Available targets: ${AVAILABLE_TARGETS[*]} all"
