@@ -9,15 +9,19 @@
 
 ## Enrolled Teams
 
-* boka
-* jamduna
-* jamixir
-* jamzig
-* jamzilla
-* javajam
-* spacejam
-* turbojam
-* vinwolf
+* boka (swift)
+* graymatter (elixir)
+* jamduna (go)
+* jamixir (elixir)
+* jampy (python)
+* tsjam (typescript)
+* jamzig (zig)
+* jamzilla (go)
+* javajam (java)
+* pyjamaz (python)
+* spacejam (rust)
+* turbojam (c++)
+* vinwolf (rust)
 
 ## Disputes
 
