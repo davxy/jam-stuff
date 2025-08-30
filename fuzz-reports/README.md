@@ -79,7 +79,7 @@ Performance testing is currently run on the public jam-test-vectors traces to
 allow easy reproduction and optimization. We plan to provide test traces that
 target more aggressively the PVM in future testing cycles.
 
-Current categiries:
+Current categories:
 - `fallback`: No work reports. No safrole.
 - `safrole`: No work reports. Safrole enabled.
 - `storage`: At most 5 storage-related work items per report. No Safrole.
