@@ -74,11 +74,11 @@ TARGETS[spacejam.file.linux]="spacejam-0.7.0-linux-amd64.tar.gz"
 TARGETS[spacejam.file.macos]="spacejam-0.7.0-macos-arm64.tar.gz"
 TARGETS[spacejam.cmd]="spacejam fuzz target $DEFAULT_SOCK"
 
-# === JAMTS ===
-TARGETS[jamts.repo]="vekexasia/tsjam-releases"
-TARGETS[jamts.file.linux]="tsjam-fuzzer-target.tgz"
-TARGETS[jamts.cmd]="tsjam-fuzzer-target/jam-fuzzer-target --socket $DEFAULT_SOCK"
-TARGETS[jamts.env]="JAM_CONSTANTS=tiny"
+# === TSJAM ===
+TARGETS[tsjam.repo]="vekexasia/tsjam-releases"
+TARGETS[tsjam.file.linux]="tsjam-fuzzer-target.tgz"
+TARGETS[tsjam.cmd]="tsjam-fuzzer-target/jam-fuzzer-target --socket $DEFAULT_SOCK"
+TARGETS[tsjam.env]="JAM_CONSTANTS=tiny"
 
 # === BOKA ===
 TARGETS[boka.image]="acala/boka:latest"

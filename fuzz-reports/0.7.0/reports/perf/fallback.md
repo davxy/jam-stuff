@@ -12,7 +12,7 @@
 | jamzig | 38.545643 |
 | pyjamaz | 48.507303 |
 | jamduna | 50.081184 |
-| jamts | 52.48994 |
+| tsjam | 52.48994 |
 | turbojam | 53.542769 |
 | jamzilla | 59.2566 |
 | jampy | 73.38624 |
@@ -28,7 +28,7 @@
 | polkajam | 1.7037406099999997 |
 | jamzig | 2.11363239 |
 | turbojam | 3.6399815300000022 |
-| jamts | 5.54929492 |
+| tsjam | 5.54929492 |
 | jamzilla | 9.976896700000003 |
 | javajam | 10.82540557 |
 | pyjamaz | 11.553612489999997 |
@@ -45,7 +45,7 @@
 | jamduna | 0.0 |
 | jamzig | 0.0 |
 | turbojam | 0.0 |
-| jamts | 0.284415 |
+| tsjam | 0.284415 |
 | polkajam_perf_int | 1.078129 |
 | polkajam | 1.1578330000000001 |
 | pyjamaz | 4.052420000000001 |
@@ -65,7 +65,7 @@
 | jamzig | 0.0 |
 | turbojam | 0.0 |
 | polkajam_perf_int | 1.345 |
-| jamts | 1.433 |
+| tsjam | 1.433 |
 | polkajam | 1.552 |
 | jamzilla | 5.704 |
 | pyjamaz | 9.303 |
@@ -85,7 +85,7 @@
 | turbojam | 0.0 |
 | polkajam_perf_int | 1.809 |
 | polkajam | 1.893 |
-| jamts | 2.232 |
+| tsjam | 2.232 |
 | jamzilla | 6.088 |
 | javajam | 10.938 |
 | pyjamaz | 11.582 |
@@ -104,7 +104,7 @@
 | turbojam | 0.0 |
 | polkajam_perf_int | 2.061 |
 | polkajam | 2.215 |
-| jamts | 4.112 |
+| tsjam | 4.112 |
 | jamzilla | 6.852 |
 | javajam | 11.198 |
 | spacejam | 12.969 |
@@ -127,7 +127,7 @@
 | boka | 27.919 |
 | pyjamaz | 42.623 |
 | turbojam | 44.508 |
-| jamts | 50.563 |
+| tsjam | 50.563 |
 | jamzilla | 57.468 |
 | jampy | 68.866 |
 | vinwolf | 100.259 |
@@ -147,7 +147,7 @@
 | jamzig | 7.3269270314983626 |
 | pyjamaz | 9.650507505623453 |
 | turbojam | 12.436223343106905 |
-| jamts | 13.41605288703718 |
+| tsjam | 13.41605288703718 |
 | vinwolf | 13.674768031956033 |
 | jamzilla | 14.155468098326539 |
 | jamixir | 22.355075200993976 |
