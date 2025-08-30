@@ -1,10 +1,4 @@
 #!/bin/bash
- 
-if ! command -v jam-decode &> /dev/null; then
-    echo "Error: 'jam-decode' command not found"
-    echo "Please install jam-types-py from: https://github.com/davxy/jam-types-py"
-    exit 1
-fi
 
 if [ $# -eq 0 ]; then
     echo "Usage: $0 <folder>"
@@ -33,7 +27,7 @@ find "$FOLDER" -name "report.bin" -type f | while read -r report_bin; do
     output_dir="output/$subfolder_name"
     mkdir -p "$output_dir"
     
-    jam-decode "$report_bin" > "$output_dir/report.json"
+    "$SCRIPT_DIR/decode.py" "$report_bin" > "$output_dir/report.json"
     
     cp "$report_bin" "$output_dir/"
     
