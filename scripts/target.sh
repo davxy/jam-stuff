@@ -229,19 +229,16 @@ clone_github_repo() {
 
     git clone "https://github.com/$repo" --depth 1 "$temp_dir"
     local commit_hash=$(cd "$temp_dir" && git rev-parse --short HEAD)
+    echo "Cloning last revisin: $commit_hash"
     local target_dir="targets/$target"
     echo "Cloned to $target_dir"
 
     mkdir -p "$target_dir"
     local target_dir_rev="$target_dir/$commit_hash"
-    if [ -d "$target_dir_rev" ]; then
-        echo "$target_dir_rev already exists"
-        rm -rf "$temp_dir"
-        return 0
-    fi
     mv "$temp_dir" "$target_dir_rev"
 
-    ln -sf "$(realpath $target_dir_rev)" "$target_dir/latest"
+    rm -f "$target_dir/latest"
+    ln -s "$(realpath $target_dir_rev)" "$target_dir/latest"
 
     post_actions "$target" "$os"
    
